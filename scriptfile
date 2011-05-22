@@ -1,0 +1,95 @@
+# Script File
+
+# Website
+#
+# Processing to convert O-Pro articles into something suitable for putting
+# into the WROCC website CMS.
+
+[Website]
+Sub: RISC OS 2:RISC OS[160]2
+Sub: RISC OS 3:RISC OS[160]3
+Sub: RISC OS 4:RISC OS[160]4
+Sub: RISC OS 5:RISC OS[160]5
+Sub: RISC OS 6:RISC OS[160]6
+Sub: RISC OS:RISC[160]OS
+Sub: &:&amp;
+Sub: ":&quot;
+Sub: [144]:&lsquo;
+Sub: [145]:&rsquo;
+Sub: [148]:&ldquo;
+Sub: [149]:&rdquo;
+Sub: [160]:&nbsp;
+Sub: [32][151][32]:[32]&ndash;[32]
+Sub: [151]:&ndash;
+Sub: [32][153][32]:[32]&ndash;[32]
+Sub: °:&deg;
+Sub: £:&pound;
+Sub: [140]:...
+Sub: [143]:&bull;
+Sub: [153]:&minus;
+Sub: ×:&times;
+Sub: ü:&uuml;
+Sub: [10]:</p>[10][10]<p>
+
+
+# WROCC
+#
+# Processing for WROCC Newsletter submissions.
+
+[WROCC]
+Remove: ManyNewLines
+Remove: BrokenLines
+Remove: ManySpaces
+Remove: ManyTabs
+Remove: SmartQuotes
+Sub: RISCOS:RISC[160]OS
+Sub: RiscOS:RISC[160]OS
+Sub: Risc OS:RISC[160]OS
+Sub: RISC OS:RISC[160]OS
+Sub: RISC[160]OS 2:RISC[160]OS[160]2
+Sub: RISC[160]OS 3:RISC[160]OS[160]3
+Sub: RISC[160]OS 4:RISC[160]OS[160]4
+Sub: RISC[160]OS 5:RISC[160]OS[160]5
+Sub: RISC[160]OS 6:RISC[160]OS[160]6
+Sub: icon bar:iconbar
+Sub: icon-bar:iconbar
+Sub: icon[160]bar:iconbar
+Sub: RISC[160]OS Ltd:RISCOS Ltd
+Sub: Risc PC:RiscPC
+Sub: Risc[160]PC:RiscPC
+Sub: RISC PC:RiscPC
+Sub: RISC[160]PC:RiscPC
+Sub: Model B:Model[160]B
+Sub: ModelB:Model[160]B
+Sub: A9Home:A9home
+Sub: A9 Home:A9home
+Sub: A9 home:A9home
+Sub: A9[160]Home:A9home
+Sub: A9[160]home:A9home
+Sub: Artworks:ArtWorks
+Sub: ArtWorks 2:ArtWorks[160]2
+Sub: WindowsXP:Windows[160]XP
+Sub: Windows XP: Windows[160]XP
+Sub: Windows7:Windows[160]7
+Sub: Windows 7:Windows[160]7
+Sub: [32]-[32]:[32][151][32]
+Sub: [32]--[32]:[32][151][32]
+Sub: --:[32][151][32]
+Sub: [152]:[32][151][32]
+Sub: [32][152][32]:[32][151][32]
+Sub: [32][153][32]:[32][151][32]
+
+
+
+#Remove: SmartQuotes | CRLF | ManySpaces | ManyTabs | BrokenLines | ManyNewLines
+
+
+
+
+#SCRIPT:Predefined commands  |This is the name of the script
+#{SMART QUOTES}              |This turns straight quotes into sexed quotes
+#{FLIP DATE}                 |This turns dates, such as 23-03-1955, into 1955-03-23
+#{SWOP CASE}		    |This tuns lower case characters to upper case and vice versa
+#{LOWER CASE}		    |This turns all characters to lower case
+#{UPPER CASE}		    |This turns all characters to upper case
+#{FIRST CAPS}		    |This turns all characters to lower case, except the first one

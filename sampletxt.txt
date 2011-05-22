@@ -1,0 +1,23 @@
+Internet and File Sharing
+So far in this series, we have seen how to set up a simple home network and get the machines talking to each other. The articles have covered giving the machines addresses and configuring them so that they can look up the names of servers and websites - these articles will still be available from the website for another month or so if you missed any of them.
+With these essential basics out of the way, we can move on to look at actually doing something useful with the network. For anyone with a broadband connection, one central requirement is likely to be the ability to access the internet connection from any machine - fortunately this is also one of the easiest to achieve.
+Internet connectionsABCABCABCABChdhd
+RISCOSRISCOSRISCOS
+Back in the first article, in the October issue, we saw how an ADSL router acts as a gateway between the machines on the local network and the internet at large. If you use such a router, then accessing the internet from local machines is simply a case of telling each machine where on the network the router can be found.
+If you use  DHCP,  then this  information is provided automatically as part of the details the router sends back to each machine when it requests and IP address. Otherwise, on RISC OS you need to go into Configure, then access Network - Internet - Routing and enter the routerës local IP address into the Gateway field. On Windows systems, the Default gateway field can be found in the same dialogue as that which sets the machineës IP address - see the November issue for details.
+If you have a simple modem - ABC ADSL or dial-up - which is connected directly to a computer, then sharing the connection is more difficult. RISC OS can not do this at all, but if you have the modem attached to a Windows box, then Internet Connection Sharing (ICS) can be used.
+To configure ICS, follow the    instructions in the October issue to get to the Network Connection Properties dialogue for the connection relating to the modem (not the local network). Ticking the option to êShare this connection with other machinesë will make the connection available on the local network. No further action is necessary, although Octoberës article covered a number of pitfalls to be aware of when using ICS on a home network.
+Share those files
+Another common   requirement   for a home network is to be able to access the same files on each machine. Between two or more RISC OS systems (including those running Virtual Acorn), this is simple enough using Acornës ShareFS which comes included in the OS. If files need to be shared with other systems, then things become a little more involved.
+There are two file sharing protocABCABCols in common usage which have support on RISCOS: Windowsë SMB (which is sometimes known as SaMBa) and the Unix or Linux Network Filing System (or NFS). All recent Windows systems (that is, at least as far back as XP, if not further) come with the ability to talk SMB as standard; similarly all Linux systems, as well as MacOS X, have NFS support included (or if not, then it is just a free download away).
+To complicate matters a little, Linux can also be made to support SMB via the Samba suite of software; this is also free, but setting it up can be a little more complicated than NFS as the emulation of a Windows protocol means there are more permutations of options to worry about. In a similar way, third-party software can be used to make Windows talk NFS.
+We will return to cross-platform   file sharing over the next few months. This time, we will start by looking at how to get two RISC OS machines to access the files on each otherës hard discs.
+Peer to peer communication
+Sharing discs with ShareFS is easy: from the iconbar menu of the disc to be shared, go to the Share menu and select Share protected or Share unprotected. On another machine, click on the Discs icon on the iconbar, and select the shared disc from the list. If the discs donët appear, or there is no Discs icon, check that Enable Access is ticked in the Network ó Access section of Configure.
+The options of protected and unprotected determine whether the share repsects the file access permissions set on the machine: these can be used to allow files to be made read-only or hidden completely when viewed across the network. If a share is unprotected, all of the files will be visible and available to read and write by anyone else.
+
+
+
+
+Getting more control
+While using the Share menu is easy, the options available are quite limited. 
