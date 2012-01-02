@@ -1,0 +1,24 @@
+/* Menus for ProcText
+ *
+ * (C) Stephen Fryatt, 2011
+ */
+
+
+/* ==================================================================================================================
+ * Icon bar menu.
+ */
+
+menu(iconbar_menu, "ProcText")
+{
+	item("Info") {
+		d_box(ProgInfo);
+	}
+	item("Help") {
+		dotted;
+	}
+	item("Choices...") {
+		dotted;
+	}
+	item("Quit");
+}
+

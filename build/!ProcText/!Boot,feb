@@ -1,0 +1,25 @@
+| >!Boot
+|
+| Boot file for ProcText
+|
+| (c) Stephen Fryatt, 2011
+
+Set ProcText$Help <Obey$Dir>.!Help
+Set ProcText$Version "0.10"
+Set ProcText$Web "http://www.stevefryatt.org.uk/software/"
+Set ProcText$Title "ProcText"
+Set ProcText$Publisher "Stephen Fryatt"
+Set ProcText$Description "Automated Text Manipulation"
+
+If "<ProcText$Dir>"="" Then Set ProcText$Dir <Obey$Dir>
+
+| Set the application sprites.
+
+Set ProcText$Sprites <ProcText$Dir>.!Sprites
+|If "<Boot$OSVersion>" >= "400" Then Set ProcText$Sprites <ProcText$Dir>.4Sprites
+|If "<Boot$OSVersion>" >= "500" Then Set ProcText$Sprites <ProcText$Dir>.5Sprites
+|If "<Boot$OSVersion>" >= "600" Then Set ProcText$Sprites <ProcText$Dir>.4Sprites
+
+IconSprites <ProcText$Sprites>
+
+Unset ProcText$Sprites

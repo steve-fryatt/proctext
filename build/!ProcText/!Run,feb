@@ -1,0 +1,36 @@
+| >!Run
+|
+| Run file for ProcText
+|
+| (c) Stephen Fryatt, 2011
+
+Set ProcText$Help <Obey$Dir>.!Help
+Set ProcText$Version "0.10"
+Set ProcText$Web "http://www.stevefryatt.org.uk/software/"
+Set ProcText$Title "ProcText"
+Set ProcText$Publisher "Stephen Fryatt"
+Set ProcText$Description "Automated Text Manipulation"
+
+Set ProcText$Dir <Obey$Dir>
+
+Set ProcText$Sprites <ProcText$Dir>.!Sprites
+|If "<Boot$OSVersion>" >= "400" Then Set ProcText$Sprites <ProcText$Dir>.4Sprites
+|If "<Boot$OSVersion>" >= "500" Then Set ProcText$Sprites <ProcText$Dir>.5Sprites
+|If "<Boot$OSVersion>" >= "600" Then Set ProcText$Sprites <ProcText$Dir>.4Sprites
+
+IconSprites <ProcText$Sprites>
+
+Unset ProcText$Sprites
+
+| Ensure the Nested Wimp is installed.
+
+|RMEnsure WindowManager 3.98 Error ProcText requires the Nested Window Manager.
+
+| Ensure a suitable version of the SCL is available.
+
+RMEnsure SharedCLibrary 5.17 RMLoad System:Modules.CLib
+RMEnsure SharedCLibrary 5.34 Error ProcText requires version 5.34 or later of the Shared C Library.
+
+WimpSlot -min 256k -max 256k
+
+Run <ProcText$Dir>.!RunImage %*0
