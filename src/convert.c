@@ -208,6 +208,7 @@ static void convert_close_window()
 			process_destroy_script_file(convert_file);
 
 		convert_data = NULL;
+		convert_file = NULL;
 
 		convert_script_menu_destroy();
 }
