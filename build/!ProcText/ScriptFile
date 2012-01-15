@@ -37,6 +37,7 @@ Sub: [10]:</p>[10][10]<p>
 # Processing for WROCC Newsletter submissions.
 
 [WROCC]
+Remove: CrLf
 Remove: ManyNewLines
 Remove: BrokenLines
 Remove: ManySpaces
