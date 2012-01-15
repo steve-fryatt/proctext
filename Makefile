@@ -40,6 +40,7 @@ CC := $(wildcard $(GCCSDK_INSTALL_CROSSBIN)/*gcc)
 
 RM := rm -rf
 CP := cp
+MKDIR := mkdir
 
 ZIP := /home/steve/GCCSDK/env/bin/zip
 
@@ -115,9 +116,13 @@ application: $(OUTDIR)/$(APP)/$(RUNIMAGE) $(OUTDIR)/$(APP)/$(UKRES)/$(MENUS)
 
 OBJS := $(addprefix $(OBJDIR)/, $(OBJS))
 
-$(OUTDIR)/$(APP)/$(RUNIMAGE): $(OBJS)
+$(OUTDIR)/$(APP)/$(RUNIMAGE): $(OBJDIR) $(OBJS)
 	$(CC) $(CCFLAGS) $(LINKS) -o $(OUTDIR)/$(APP)/$(RUNIMAGE) $(OBJS)
 
+# Create a folder to hold the object files.
+
+$(OBJDIR):
+	$(MKDIR) $(OBJDIR)
 
 # Build the object files, and identify their dependencies.
 
