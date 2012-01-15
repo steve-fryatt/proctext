@@ -38,9 +38,9 @@ BUZIPFILE := proctext$(shell date "+%Y%m%d").zip
 
 CC := $(wildcard $(GCCSDK_INSTALL_CROSSBIN)/*gcc)
 
+MKDIR := mkdir
 RM := rm -rf
 CP := cp
-MKDIR := mkdir
 
 ZIP := /home/steve/GCCSDK/env/bin/zip
 
