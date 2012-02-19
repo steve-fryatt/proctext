@@ -76,7 +76,7 @@ void convert_initialise(void)
 	event_add_window_menu_prepare(convert_window, convert_menu_prepare_handler);
 	event_add_window_menu_selection(convert_window, convert_menu_selection_handler);
 
-	event_add_window_icon_popup(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script_menu, ICON_CONVERT_SCRIPT);
+	event_add_window_icon_popup(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script_menu, ICON_CONVERT_SCRIPT, NULL);
 }
 
 
