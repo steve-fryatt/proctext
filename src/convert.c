@@ -196,6 +196,8 @@ static void convert_process_and_save(char *filename)
 
 	convert_logger_available = (xos_swi_number_from_string("Report_Text0", &swi) == NULL) ? TRUE : FALSE;
 
+	convert_logger("\\GConverting file");
+
 	process_run_script(convert_data, convert_file, convert_script, 1, convert_logger);
 	process_save_file(convert_data, filename);
 }
