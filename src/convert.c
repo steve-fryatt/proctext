@@ -11,6 +11,7 @@
 
 /* OSLib header files */
 
+#include "oslib/os.h"
 #include "oslib/wimp.h"
 
 /* SF-Lib header files. */
@@ -54,6 +55,7 @@ static void		convert_process_and_save(char *filename);
 static void		convert_close_window();
 static wimp_menu	*convert_script_menu_build(void);
 static void		convert_script_menu_destroy(void);
+static void		convert_logger(char *text);
 
 
 static wimp_w			convert_window = NULL;				/**< The handle of the conversion window.			*/
@@ -63,6 +65,8 @@ static struct process_data	*convert_data = NULL;				/**< The handle of the curre
 static int			convert_script = 0;				/**< The script to use in the conversion.			*/
 static wimp_menu		*convert_script_menu = NULL;			/**< The menu block for the convert script menu.		*/
 static char			*convert_script_menu_title = NULL;		/**< The title data for the convert script menu.		*/
+
+static osbool			convert_logger_available = FALSE;		/**< True if we have a logger available to take output.		*/
 
 /**
  * Initialise the file conversion dialogue.
@@ -188,7 +192,11 @@ static osbool convert_immediate_window_save(void)
 
 static void convert_process_and_save(char *filename)
 {
-	process_run_script(convert_data, convert_file, convert_script);
+	int	swi;
+
+	convert_logger_available = (xos_swi_number_from_string("Report_Text0", &swi) == NULL) ? TRUE : FALSE;
+
+	process_run_script(convert_data, convert_file, convert_script, 1, convert_logger);
 	process_save_file(convert_data, filename);
 }
 
@@ -387,5 +395,19 @@ static void convert_script_menu_destroy(void)
 
 	convert_script_menu = NULL;
 	convert_script_menu_title = NULL;
+}
+
+
+/**
+ * Provide a route back from the process module for conversion progress
+ * details.
+ *
+ * \param *text			The text to be logged.
+ */
+
+static void convert_logger(char *text)
+{
+	if (convert_logger_available)
+		debug_printf(text);
 }
 

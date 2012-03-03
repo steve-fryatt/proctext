@@ -19,15 +19,15 @@
 /* SF-Lib header files. */
 
 #include "sflib/config.h"
-#include "sflib/debug.h"
 #include "sflib/string.h"
 
 /* Application header files */
 
 #include "process.h"
 
-#define ACTIONS_ALLOC_BLOCK 20
-#define FILE_ALLOC_BLOCK    1024
+#define ACTIONS_ALLOC_BLOCK  20
+#define FILE_ALLOC_BLOCK     1024
+#define PROCESS_LOG_LINE_LEN 1024
 
 enum process_action_type {
 	ACTION_NONE = 0,
@@ -67,13 +67,12 @@ struct process_file {
 	struct process_script		*scripts;				/**< An array of script details for the file.		*/
 };
 
-
-static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity);
-static int run_substitute(struct process_data *data, char *str, char *to, int cs, int verbosity);
+static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *));
+static int run_substitute(struct process_data *data, char *str, char *to, int cs, int verbosity, void (logger)(char *));
 static int test_memory(char *mem, char *str, int cs);
 static int substitute_text(struct process_data *data, char *position, int length, char *to);
 
-static int load_script(char *file, char *script, struct process_action **actions);
+static int load_script(char *file, char *script, struct process_action **actions, void (logger)(char *));
 static void add_new_action(struct process_action **actions, int *items, int *size, int type, char *from, char *to, int min, int max);
 char *str_char_cpy(char *str1, char *str2);
 
@@ -225,28 +224,28 @@ void process_save_file(struct process_data *data, char *filename)
  * \param *data		The data block to be processed.
  * \param *file		The handle of the file containing the script to be used.
  * \param script	The number of the script within the file.
+ * \param verbosity	The level of logging verbosity, larger == more.
+ * \param *logger	A callback to handle logging output.
  */
 
-void process_run_script(struct process_data *data, struct process_file *file, int script)
+void process_run_script(struct process_data *data, struct process_file *file, int script, int verbosity, void (logger)(char *))
 {
 	struct process_action	*actions = NULL;
-	int			items, i, verbosity;
+	int			items, i;
 
 	if (data == NULL || file == NULL || script < 0 || script >= file->count)
 		return;
 
-	verbosity = 0;
-
-	items = load_script(file->filename, file->scripts[script].name, &actions);
+	items = load_script(file->filename, file->scripts[script].name, &actions, logger);
 
 	for (i=0; i<items; i++) {
 		switch (actions[i].type) {
 		case ACTION_SUBSTITUTE:
-			run_substitute(data, actions[i].from, actions[i].to, 1, verbosity);
+			run_substitute(data, actions[i].from, actions[i].to, 1, verbosity, logger);
 			break;
 
 		case ACTION_REDUCE:
-			run_reduce(data, actions[i].from, actions[i].to, actions[i].minimum, actions[i].maximum, verbosity);
+			run_reduce(data, actions[i].from, actions[i].to, actions[i].minimum, actions[i].maximum, verbosity, logger);
 			break;
 		}
 	}
@@ -383,10 +382,10 @@ char *process_script_file_name(struct process_file *file, int script)
 /* --------------------------------------------------------------------------------------------------------------------
  */
 
-static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity)
+static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *))
 {
 	int	len, match_len, found, step;
-	char	*mem, *start, b1[15], b2[15];
+	char	*mem, *start, b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
@@ -415,9 +414,11 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 		}
 	}
 
-	if (found > 0 || verbosity > 0)
-		debug_printf("Reducing multiple '%s' to '%s': reduced %d\n",
+	if (logger != NULL && (found > 0 || verbosity > 0)) {
+		snprintf(log, PROCESS_LOG_LINE_LEN, "Reducing multiple '%s' to '%s': reduced %d\n",
 				write_ctrl_chars(b1, str, 15), write_ctrl_chars(b2, to, 15), found);
+		logger(log);
+	}
 
 	return (found);
 }
@@ -425,10 +426,10 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 /* --------------------------------------------------------------------------------------------------------------------
  */
 
-static int run_substitute(struct process_data *data, char *from, char *to, int cs, int verbosity)
+static int run_substitute(struct process_data *data, char *from, char *to, int cs, int verbosity, void (logger)(char *))
 {
 	int	match_len, found, step;
-	char	*mem, b1[15], b2[15];
+	char	*mem, b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
@@ -449,9 +450,11 @@ static int run_substitute(struct process_data *data, char *from, char *to, int c
 		}
 	}
 
-	if (found > 0 || verbosity > 0)
-		debug_printf("Substituting '%s' with '%s': replaced %d\n",
+	if (logger != NULL && (found > 0 || verbosity > 0)) {
+		snprintf(log, PROCESS_LOG_LINE_LEN, "Substituting '%s' with '%s': replaced %d\n",
 				write_ctrl_chars(b1, from, 15), write_ctrl_chars(b2, to, 15), found);
+		logger(log);
+	}
 
 	return (found);
 }
@@ -531,11 +534,11 @@ static int substitute_text(struct process_data *data, char *position, int length
  *   items:   the number of actions added to the list.
  */
 
-static int load_script(char *file, char *script, struct process_action **actions)
+static int load_script(char *file, char *script, struct process_action **actions, void (logger)(char *))
 {
 	FILE	*f;
 	int	items = 0, size = 0, result, found = 0;
-	char	token[64], value[1024], section[128], *bkpt;
+	char	token[64], value[1024], section[128], *bkpt, log[PROCESS_LOG_LINE_LEN];
 
 	size = ACTIONS_ALLOC_BLOCK;
 	*actions = malloc(size * sizeof(struct process_action));
@@ -561,7 +564,9 @@ static int load_script(char *file, char *script, struct process_action **actions
 
 						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, value, bkpt, 0, 0);
 					} else {
-						debug_printf("Invalid substitution values '%s'.\n", value);
+						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid substitution values '%s'.\n", value);
+						if (logger != NULL)
+							logger(log);
 					}
 				} else if (string_nocase_strcmp(token, "remove") == 0) {
 					if (string_nocase_strcmp(value, "smartquotes") == 0) {
@@ -580,7 +585,9 @@ static int load_script(char *file, char *script, struct process_action **actions
 					} else if (string_nocase_strcmp(value, "manytabs") == 0) {
 						add_new_action(actions, &items, &size, ACTION_REDUCE, "[9]", "[9]", 2, 0);
 					} else {
-						debug_printf("Invalid remove command '%s'.\n", value);
+						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid remove command '%s'.\n", value);
+						if (logger != NULL)
+							logger(log);
 					}
 				} else if (string_nocase_strcmp(token, "command") == 0) {
 					add_new_action(actions, &items, &size, ACTION_COMMAND, value, "", 0, 0);

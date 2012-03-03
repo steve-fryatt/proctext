@@ -66,11 +66,11 @@ void process_save_file(struct process_data *data, char *filename);
  * \param *data		The data block to be processed.
  * \param *file		The handle of the file containing the script to be used.
  * \param script	The number of the script within the file.
+ * \param verbosity	The level of logging verbosity, larger == more.
+ * \param *logger	A callback to handle logging output.
  */
 
-void process_run_script(struct process_data *data, struct process_file *file, int script);
-
-
+void process_run_script(struct process_data *data, struct process_file *file, int script, int verbosity, void (logger)(char *));
 
 
 /**
