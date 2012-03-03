@@ -68,8 +68,8 @@ struct process_file {
 };
 
 static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *));
-static int run_substitute(struct process_data *data, char *str, char *to, int cs, int verbosity, void (logger)(char *));
-static int test_memory(char *mem, char *str, int cs);
+static int run_substitute(struct process_data *data, char *str, char *to, osbool cs, int verbosity, void (logger)(char *));
+static int test_memory(char *mem, char *str, osbool cs);
 static int substitute_text(struct process_data *data, char *position, int length, char *to);
 
 static int load_script(char *file, char *script, struct process_action **actions, void (logger)(char *));
@@ -241,7 +241,7 @@ void process_run_script(struct process_data *data, struct process_file *file, in
 	for (i=0; i<items; i++) {
 		switch (actions[i].type) {
 		case ACTION_SUBSTITUTE:
-			run_substitute(data, actions[i].from, actions[i].to, 1, verbosity, logger);
+			run_substitute(data, actions[i].from, actions[i].to, TRUE, verbosity, logger);
 			break;
 
 		case ACTION_REDUCE:
@@ -426,7 +426,7 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 /* --------------------------------------------------------------------------------------------------------------------
  */
 
-static int run_substitute(struct process_data *data, char *from, char *to, int cs, int verbosity, void (logger)(char *))
+static int run_substitute(struct process_data *data, char *from, char *to, osbool cs, int verbosity, void (logger)(char *))
 {
 	int	match_len, found, step;
 	char	*mem, b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
@@ -471,7 +471,7 @@ static int run_substitute(struct process_data *data, char *from, char *to, int c
  *   matched: the number of characters matched
  */
 
-static int test_memory(char *mem, char *str, int cs)
+static int test_memory(char *mem, char *str, osbool cs)
 {
 	int	matched;
 
