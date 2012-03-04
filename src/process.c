@@ -32,6 +32,7 @@
 enum process_action_type {
 	ACTION_NONE = 0,
 	ACTION_SUBSTITUTE,
+	ACTION_SUBSTITUTE_CASE_SENSITIVE,
 	ACTION_REDUCE,
 	ACTION_COMMAND
 };
@@ -241,7 +242,8 @@ void process_run_script(struct process_data *data, struct process_file *file, in
 	for (i=0; i<items; i++) {
 		switch (actions[i].type) {
 		case ACTION_SUBSTITUTE:
-			run_substitute(data, actions[i].from, actions[i].to, TRUE, verbosity, logger);
+		case ACTION_SUBSTITUTE_CASE_SENSITIVE:
+			run_substitute(data, actions[i].from, actions[i].to, (actions[i].type == ACTION_SUBSTITUTE_CASE_SENSITIVE) ? TRUE : FALSE, verbosity, logger);
 			break;
 
 		case ACTION_REDUCE:
@@ -557,7 +559,18 @@ static int load_script(char *file, char *script, struct process_action **actions
 
 		case sf_READ_CONFIG_VALUE_RETURNED:
 			if (found) {
-				if (string_nocase_strcmp(token, "sub") == 0) {
+				if (string_nocase_strcmp(token, "sub") == 0 || string_nocase_strcmp(token, "cssub") == 0) {
+					if ((bkpt = strchr(value, ':')) != NULL) {
+						*bkpt = '\0';
+						bkpt++;
+
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, value, bkpt, 0, 0);
+					} else {
+						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid substitution values '%s'.\n", value);
+						if (logger != NULL)
+							logger(log);
+					}
+				} else if (string_nocase_strcmp(token, "cisub") == 0) {
 					if ((bkpt = strchr(value, ':')) != NULL) {
 						*bkpt = '\0';
 						bkpt++;
@@ -570,12 +583,12 @@ static int load_script(char *file, char *script, struct process_action **actions
 					}
 				} else if (string_nocase_strcmp(token, "remove") == 0) {
 					if (string_nocase_strcmp(value, "smartquotes") == 0) {
-						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, "[144]", "'", 0, 0);
-						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, "[145]", "'", 0, 0);
-						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, "[148]", "\"", 0, 0);
-						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, "[149]", "\"", 0, 0);
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, "[144]", "'", 0, 0);
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, "[145]", "'", 0, 0);
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, "[148]", "\"", 0, 0);
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, "[149]", "\"", 0, 0);
 					} else if (string_nocase_strcmp(value, "crlf") == 0) {
-						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, "[13][10]", "[10]", 0, 0);
+						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, "[13][10]", "[10]", 0, 0);
 					} else if (string_nocase_strcmp(value, "manyspaces") == 0) {
 						add_new_action(actions, &items, &size, ACTION_REDUCE, " ", " ", 2, 0);
 					} else if (string_nocase_strcmp(value, "manynewlines") == 0) {
