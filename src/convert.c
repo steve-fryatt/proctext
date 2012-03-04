@@ -49,7 +49,6 @@
 
 static void		convert_click_handler(wimp_pointer *pointer);
 static void		convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_pointer *pointer);
-static void		convert_menu_selection_handler(wimp_w window, wimp_menu *menu, wimp_selection *selection);
 static osbool		convert_immediate_window_save(void);
 static void		convert_process_and_save(char *filename);
 static void		convert_close_window();
@@ -78,7 +77,6 @@ void convert_initialise(void)
 	ihelp_add_window(convert_window, "Process", NULL);
 	event_add_window_mouse_event(convert_window, convert_click_handler);
 	event_add_window_menu_prepare(convert_window, convert_menu_prepare_handler);
-	event_add_window_menu_selection(convert_window, convert_menu_selection_handler);
 
 	event_add_window_icon_popup(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script_menu, ICON_CONVERT_SCRIPT, NULL);
 }
@@ -134,7 +132,7 @@ void convert_load_file(char *filename)
 	convert_script = 0;
 
 	icons_printf(convert_window, ICON_CONVERT_FILENAME, "%s2", filename);
-	icons_printf(convert_window, ICON_CONVERT_SCRIPT, "%s", menus_get_text_addr(convert_script_menu, convert_script));
+	event_set_window_icon_popup_selection(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script);
 
 	error = xwimp_get_pointer_info(&pointer);
 	if (error == NULL)
@@ -197,6 +195,8 @@ static void convert_process_and_save(char *filename)
 	convert_logger_available = (xos_swi_number_from_string("Report_Text0", &swi) == NULL) ? TRUE : FALSE;
 
 	convert_logger("\\GConverting file");
+
+	convert_script = event_get_window_icon_popup_selection(convert_window, ICON_CONVERT_SCRIPTMENU);
 
 	process_run_script(convert_data, convert_file, convert_script, 1, convert_logger);
 	process_save_file(convert_data, filename);
@@ -268,23 +268,6 @@ static void convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_po
 	if (pointer != NULL) {
 		event_set_menu_block(convert_script_menu);
 		templates_set_menu(TEMPLATES_MENU_SCRIPT_POPUP, convert_script_menu);
-	}
-}
-
-
-/**
- * Handle menu selection events in the conversion window.
- *
- * \param window		The window containing the menu.
- * \param *menu			The menu to be opened.
- * \param *selection		The Wimp menu selection data.
- */
-
-static void convert_menu_selection_handler(wimp_w window, wimp_menu *menu, wimp_selection *selection)
-{
-	if (menu == convert_script_menu) {
-		if (selection->items[0] != -1)
-			convert_script = selection->items[0];
 	}
 }
 
