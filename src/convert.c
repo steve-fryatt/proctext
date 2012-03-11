@@ -92,6 +92,7 @@ void convert_initialise(void)
 void convert_load_file(char *filename)
 {
 	wimp_pointer	pointer;
+	wimp_menu	*popup;
 	os_error	*error;
 
 	/* Abandon any existing conversion process. */
@@ -127,7 +128,8 @@ void convert_load_file(char *filename)
 
 	/* Set up and open the conversion dialogue. */
 
-	convert_script_menu_build();
+	popup = convert_script_menu_build();
+	event_set_window_icon_popup_menu(convert_window, ICON_CONVERT_SCRIPTMENU, popup);
 
 	convert_script = 0;
 
