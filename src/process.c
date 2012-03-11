@@ -636,6 +636,7 @@ void add_new_action(struct process_action **actions, int *items, int *size, int 
 		break;
 
 	case ACTION_SUBSTITUTE:
+	case ACTION_SUBSTITUTE_CASE_SENSITIVE:
 		(*actions)[*items].from = malloc(strlen(from) + 1);
 		str_char_cpy((*actions)[*items].from, from);
 
