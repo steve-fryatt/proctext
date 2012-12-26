@@ -37,38 +37,41 @@ Sub: [10]:</p>[10][10]<p>
 # Processing for WROCC Newsletter submissions.
 
 [WROCC]
-Remove: CrLf
 Remove: ManyNewLines
 Remove: BrokenLines
 Remove: ManySpaces
 Remove: ManyTabs
 Remove: SmartQuotes
-CiSub: RISCOS:RISC[160]OS
-CiSub: RISC OS:RISC[160]OS
+Sub: RISCOS:RISC[160]OS
+Sub: RiscOS:RISC[160]OS
+Sub: Risc OS:RISC[160]OS
+Sub: RISC OS:RISC[160]OS
 Sub: RISC[160]OS 2:RISC[160]OS[160]2
 Sub: RISC[160]OS 3:RISC[160]OS[160]3
 Sub: RISC[160]OS 4:RISC[160]OS[160]4
 Sub: RISC[160]OS 5:RISC[160]OS[160]5
 Sub: RISC[160]OS 6:RISC[160]OS[160]6
+Sub: icon bar:iconbar
+Sub: icon-bar:iconbar
+Sub: icon[160]bar:iconbar
 Sub: RISC[160]OS Ltd:RISCOS Ltd
-CiSub: icon bar:iconbar
-CiSub: icon-bar:iconbar
-CiSub: iconbar:iconbar
-CiSub: icon[160]bar:iconbar
-CiSub: Risc PC:RiscPC
-CiSub: Risc[160]PC:RiscPC
-CiSub: RiscPC:RiscPC
-CiSub: Model B:Model[160]B
-CiSub: ModelB:Model[160]B
-CiSub: A9Home:A9home
-CiSub: A9 Home:A9home
-CiSub: A9[160]Home:A9home
-CiSub: ArtWorks:ArtWorks
-CiSub: ArtWorks 2:ArtWorks[160]2
-CiSub: WindowsXP:Windows[160]XP
-CiSub: Windows XP: Windows[160]XP
-CiSub: Windows7:Windows[160]7
-CiSub: Windows 7:Windows[160]7
+Sub: Risc PC:RiscPC
+Sub: Risc[160]PC:RiscPC
+Sub: RISC PC:RiscPC
+Sub: RISC[160]PC:RiscPC
+Sub: Model B:Model[160]B
+Sub: ModelB:Model[160]B
+Sub: A9Home:A9home
+Sub: A9 Home:A9home
+Sub: A9 home:A9home
+Sub: A9[160]Home:A9home
+Sub: A9[160]home:A9home
+Sub: Artworks:ArtWorks
+Sub: ArtWorks 2:ArtWorks[160]2
+Sub: WindowsXP:Windows[160]XP
+Sub: Windows XP: Windows[160]XP
+Sub: Windows7:Windows[160]7
+Sub: Windows 7:Windows[160]7
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
 Sub: --:[32][151][32]
