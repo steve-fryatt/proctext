@@ -1,4 +1,4 @@
-/* Copyright 2009-2012, Stephen Fryatt
+/* Copyright 2009-2014, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -287,10 +287,11 @@ void process_run_script(struct process_data *data, struct process_file *file, in
 
 struct process_file *process_load_script_file(char *filename)
 {
-	FILE			*f;
-	struct process_file	*file = NULL;
-	int			result, i;
-	char			token[64], value[1024], section[128];
+	FILE				*f;
+	struct process_file		*file = NULL;
+	enum config_read_status		result;
+	int				i;
+	char				token[64], value[1024], section[128];
 
 	if (filename == NULL || *filename == '\0')
 		return NULL;
@@ -314,8 +315,8 @@ struct process_file *process_load_script_file(char *filename)
 		return NULL;
 	}
 
-	while ((result = config_read_token_pair(f, token, value, section)) != sf_READ_CONFIG_EOF)
-		if (result == sf_READ_CONFIG_NEW_SECTION)
+	while ((result = config_read_token_pair(f, token, value, section)) != sf_CONFIG_READ_EOF)
+		if (result == sf_CONFIG_READ_NEW_SECTION)
 			file->count++;
 
 	rewind(f);
@@ -333,8 +334,8 @@ struct process_file *process_load_script_file(char *filename)
 
 	i = 0;
 
-	while ((result = config_read_token_pair(f, token, value, section)) != sf_READ_CONFIG_EOF) {
-		if ((result == sf_READ_CONFIG_NEW_SECTION) && (i < file->count)) {
+	while ((result = config_read_token_pair(f, token, value, section)) != sf_CONFIG_READ_EOF) {
+		if ((result == sf_CONFIG_READ_NEW_SECTION) && (i < file->count)) {
 			file->scripts[i].name = strdup(section);
 			i++;
 		}
@@ -562,9 +563,11 @@ static int substitute_text(struct process_data *data, char *position, int length
 
 static int load_script(char *file, char *script, struct process_action **actions, void (logger)(char *))
 {
-	FILE	*f;
-	int	items = 0, size = 0, result, found = 0;
-	char	token[64], value[1024], section[128], *bkpt, log[PROCESS_LOG_LINE_LEN];
+	FILE				*f;
+	enum config_read_status		result;
+	bool				found = FALSE;
+	int				items = 0, size = 0;
+	char				token[64], value[1024], section[128], *bkpt, log[PROCESS_LOG_LINE_LEN];
 
 	size = ACTIONS_ALLOC_BLOCK;
 	*actions = malloc(size * sizeof(struct process_action));
@@ -576,12 +579,12 @@ static int load_script(char *file, char *script, struct process_action **actions
 	if (f == NULL)
 		return items;
 
-	while ((result = config_read_token_pair(f, token, value, section)) != sf_READ_CONFIG_EOF) {
+	while ((result = config_read_token_pair(f, token, value, section)) != sf_CONFIG_READ_EOF) {
 		switch (result) {
-		case sf_READ_CONFIG_NEW_SECTION:
+		case sf_CONFIG_READ_NEW_SECTION:
 			found = (string_nocase_strcmp(section, script) == 0);
 
-		case sf_READ_CONFIG_VALUE_RETURNED:
+		case sf_CONFIG_READ_VALUE_RETURNED:
 			if (found) {
 				if (string_nocase_strcmp(token, "sub") == 0 || string_nocase_strcmp(token, "cssub") == 0) {
 					if ((bkpt = strchr(value, ':')) != NULL) {
