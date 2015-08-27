@@ -117,7 +117,7 @@ READMEHDR := Header
 MENUSRC := menudef
 FINDHELPSRC := Help.bbt
 
-OBJS := convert.o dataxfer.o iconbar.o ihelp.o main.o process.o templates.o
+OBJS := convert.o iconbar.o ihelp.o main.o process.o templates.o olddataxfer.o
 
 
 # Build everything, but don't package it for release.

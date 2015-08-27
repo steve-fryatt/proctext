@@ -1,4 +1,4 @@
-/* Copyright 2009-2012, Stephen Fryatt
+/* Copyright 2009-2015, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -55,7 +55,7 @@
 
 /* Application header files */
 
-#include "dataxfer.h"
+#include "olddataxfer.h"
 
 #include "convert.h"
 #include "main.h"
@@ -65,25 +65,11 @@
  * Global variables.
  */
 
-/**
- * Boolean to indicate whether DragASprite is in use or not.
- */
-
-static int			dragging_sprite = 0;
-
-/**
- * The type of save drag: to differentiate Save PDF from Save As.
- */
-
-static enum dataxfer_dragtype	drag_type = 0;
-
-static char			*drag_save_leafname = NULL;
 
 /**
  * Function prototypes.
  */
 
-static void		terminate_user_drag(wimp_dragged *drag, void *data);
 static osbool		message_data_save_reply(wimp_message *message);
 static osbool		message_data_save_ack_reply(wimp_message *message);
 static osbool		message_data_load_reply(wimp_message *message);
@@ -93,102 +79,10 @@ static osbool		message_data_load_reply(wimp_message *message);
  * Initialise the data transfer system.
  */
 
-void dataxfer_initialise(void)
+void olddataxfer_initialise(void)
 {
 	event_add_message_handler(message_DATA_SAVE, EVENT_MESSAGE_INCOMING, message_data_save_reply);
-	event_add_message_handler(message_DATA_SAVE_ACK, EVENT_MESSAGE_INCOMING, message_data_save_ack_reply);
 	event_add_message_handler(message_DATA_LOAD, EVENT_MESSAGE_INCOMING, message_data_load_reply);
-}
-
-
-/**
- * Start dragging the icon from the save dialogue.  Called in response to an attempt to drag the icon.
- *
- * \param type		The drag type to start.
- * \param w		The window where the drag is starting.
- * \param i		The icon to be dragged.
- * \param *filename	The filename to be used as a starting point.
- */
-
-void start_save_window_drag(enum dataxfer_dragtype type, wimp_w w, wimp_i i, char *filename)
-{
-	wimp_window_state	window;
-	wimp_icon_state		icon;
-	wimp_drag		drag;
-	int			ox, oy;
-
-	/* Get the basic information about the window and icon. */
-
-	window.w = w;
-	wimp_get_window_state (&window);
-
-	ox = window.visible.x0 - window.xscroll;
-	oy = window.visible.y1 - window.yscroll;
-
-	icon.w = window.w;
-	icon.i = i;
-	wimp_get_icon_state (&icon);
-
-	/* Set up the drag parameters. */
-
-	drag.w = window.w;
-	drag.type = wimp_DRAG_USER_FIXED;
-
-	drag.initial.x0 = ox + icon.icon.extent.x0;
-	drag.initial.y0 = oy + icon.icon.extent.y0;
-	drag.initial.x1 = ox + icon.icon.extent.x1;
-	drag.initial.y1 = oy + icon.icon.extent.y1;
-
-	drag.bbox.x0 = 0x80000000;
-	drag.bbox.y0 = 0x80000000;
-	drag.bbox.x1 = 0x7fffffff;
-	drag.bbox.y1 = 0x7fffffff;
-
-
-	/* Read CMOS RAM to see if solid drags are required. */
-
-	dragging_sprite = ((osbyte2 (osbyte_READ_CMOS, osbyte_CONFIGURE_DRAG_ASPRITE, 0) &
-			osbyte_CONFIGURE_DRAG_ASPRITE_MASK) != 0);
-
-	if (dragging_sprite)
-		dragasprite_start (dragasprite_HPOS_CENTRE | dragasprite_VPOS_CENTRE |
-			dragasprite_NO_BOUND | dragasprite_BOUND_POINTER | dragasprite_DROP_SHADOW,
-			wimpspriteop_AREA, icon.icon.data.indirected_text.text, &(drag.initial), &(drag.bbox));
-	else
-		wimp_drag_box (&drag);
-
-	drag_save_leafname = string_find_leafname(filename);
-
-	drag_type = type;
-	event_set_drag_handler(terminate_user_drag, NULL, NULL);
-}
-
-
-/**
- * Callback handler for queue window drag termination.
- *
- * Start a data-save dialogue with the application at the other end.
- *
- * \param  *drag		The Wimp poll block from termination.
- * \param  *data		NULL (unused).
- */
-
-static void terminate_user_drag(wimp_dragged *drag, void *data)
-{
-	wimp_pointer		pointer;
-
-	if (dragging_sprite)
-		dragasprite_stop ();
-
-	wimp_get_pointer_info (&pointer);
-
-	switch (drag_type) {
-	case DRAGTYPE_CONVERT:
-		transfer_save_start_callback(pointer.w, pointer.i, pointer.pos, 0, convert_save_file, 0, TEXT_FILE_TYPE, drag_save_leafname);
-		break;
-	default:
-		break;
-	}
 }
 
 
@@ -227,21 +121,6 @@ static osbool message_data_save_reply(wimp_message *message)
 		if (error != NULL)
 			error_report_os_error(error, wimp_ERROR_BOX_CANCEL_ICON);
 	}
-
-	return TRUE;
-}
-
-
-/**
- * Handle the receipt of a Message_DataSaveAck.
- *
- * \param *message		The associated Wimp message block.
- * \return			TRUE to show that the message was handled.
- */
-
-static osbool message_data_save_ack_reply(wimp_message *message)
-{
-	transfer_save_reply_datasaveack(message);
 
 	return TRUE;
 }

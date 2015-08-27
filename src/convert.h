@@ -1,4 +1,4 @@
-/* Copyright 2009-2012, Stephen Fryatt
+/* Copyright 2009-2015, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -44,16 +44,6 @@ void convert_initialise(void);
  */
 
 void convert_load_file(char *filename);
-
-
-/**
- * Process and save the currently loaded file.
- *
- * \param *filename	The file to save as.
- * \return		0 if the save was started OK.
- */
-
-int convert_save_file(char *filename);
 
 
 

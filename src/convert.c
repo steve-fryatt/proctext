@@ -41,6 +41,7 @@
 /* SF-Lib header files. */
 
 #include "sflib/config.h"
+#include "sflib/dataxfer.h"
 #include "sflib/debug.h"
 #include "sflib/errors.h"
 #include "sflib/event.h"
@@ -54,7 +55,7 @@
 
 #include "convert.h"
 
-#include "dataxfer.h"
+#include "olddataxfer.h"
 #include "ihelp.h"
 #include "process.h"
 #include "templates.h"
@@ -73,6 +74,8 @@
 
 static void		convert_click_handler(wimp_pointer *pointer);
 static void		convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_pointer *pointer);
+static void		convert_drag_end_handler(wimp_pointer *pointer, void *data);
+static osbool		convert_drag_end_save_handler(char *filename, void *data);
 static osbool		convert_immediate_window_save(void);
 static void		convert_process_and_save(char *filename);
 static void		convert_close_window();
@@ -167,13 +170,32 @@ void convert_load_file(char *filename)
 
 
 /**
- * Process and save the currently loaded file.
+ * Process the termination of icon drags from the Convert dialogue.
  *
- * \param *filename	The file to save as.
- * \return		0 if the save was started OK.
+ * \param *pointer		The pointer location at the end of the drag.
+ * \param *data			The saveas_savebox data for the drag.
  */
 
-int convert_save_file(char *filename)
+static void convert_drag_end_handler(wimp_pointer *pointer, void *data)
+{
+	char			*leafname;
+
+	leafname = string_find_leafname(icons_get_indirected_text_addr(convert_window, ICON_CONVERT_FILENAME));
+
+	dataxfer_start_save(pointer, leafname, 0, TEXT_FILE_TYPE, 0, convert_drag_end_save_handler, NULL);
+}
+
+
+/**
+ * Callback handler for DataSave completion on file save drags: start the
+ * conversion using the filename returned.
+ *
+ * \param *filename		The filename returned by the DataSave protocol.
+ * \param *data			Data pointer (unused).
+ * \return			TRUE if the save was started OK; else FALSE.
+ */
+
+static osbool convert_drag_end_save_handler(char *filename, void *data)
 {
 	convert_process_and_save(filename);
 	convert_close_window();
@@ -274,8 +296,7 @@ static void convert_click_handler(wimp_pointer *pointer)
 
 	case ICON_CONVERT_FILE:
 		if (pointer->buttons == wimp_DRAG_SELECT)
-			start_save_window_drag(DRAGTYPE_CONVERT, convert_window, ICON_CONVERT_FILE,
-					string_find_leafname(icons_get_indirected_text_addr(convert_window, ICON_CONVERT_FILENAME)));
+			dataxfer_save_window_drag(pointer->w, ICON_CONVERT_FILE, convert_drag_end_handler, NULL);
 		break;
 	}
 }

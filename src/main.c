@@ -1,4 +1,4 @@
-/* Copyright 2009-2012, Stephen Fryatt
+/* Copyright 2009-2015, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -47,6 +47,7 @@
 /* SF-Lib header files. */
 
 #include "sflib/config.h"
+#include "sflib/dataxfer.h"
 #include "sflib/resources.h"
 #include "sflib/heap.h"
 #include "sflib/windows.h"
@@ -68,7 +69,7 @@
 
 //#include "choices.h"
 #include "convert.h"
-#include "dataxfer.h"
+#include "olddataxfer.h"
 #include "iconbar.h"
 #include "ihelp.h"
 #include "process.h"
@@ -198,7 +199,8 @@ static void main_initialise(void)
 	/* Initialise the individual modules. */
 
 	ihelp_initialise();
-	dataxfer_initialise();
+	dataxfer_initialise(main_task_handle, NULL);
+	olddataxfer_initialise(); // \TODO -- Remove!
 //	choices_initialise();
 	iconbar_initialise();
 	convert_initialise();
