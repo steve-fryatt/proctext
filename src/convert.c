@@ -36,6 +36,7 @@
 /* OSLib header files */
 
 #include "oslib/os.h"
+#include "oslib/osfile.h"
 #include "oslib/wimp.h"
 
 /* SF-Lib header files. */
@@ -55,7 +56,6 @@
 
 #include "convert.h"
 
-#include "olddataxfer.h"
 #include "ihelp.h"
 #include "process.h"
 #include "templates.h"
@@ -72,6 +72,7 @@
 #define SCRIPT_MENU_TITLE_LEN 64
 
 
+static osbool		convert_load_file(wimp_w w, wimp_i i, unsigned filetype, char *filename, void *data);
 static void		convert_click_handler(wimp_pointer *pointer);
 static void		convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_pointer *pointer);
 static void		convert_drag_end_handler(wimp_pointer *pointer, void *data);
@@ -105,6 +106,8 @@ void convert_initialise(void)
 	event_add_window_mouse_event(convert_window, convert_click_handler);
 	event_add_window_menu_prepare(convert_window, convert_menu_prepare_handler);
 
+	dataxfer_set_load_target(osfile_TYPE_TEXT, wimp_ICON_BAR, -1, convert_load_file, NULL);
+
 	event_add_window_icon_popup(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script_menu, ICON_CONVERT_SCRIPT, NULL);
 }
 
@@ -116,7 +119,7 @@ void convert_initialise(void)
  * \param *filename	The file to load.
  */
 
-void convert_load_file(char *filename)
+static osbool convert_load_file(wimp_w w, wimp_i i, unsigned filetype, char *filename, void *data)
 {
 	wimp_pointer	pointer;
 	wimp_menu	*popup;
@@ -139,7 +142,7 @@ void convert_load_file(char *filename)
 	convert_file = process_load_script_file(config_str_read("ScriptFile"));
 
 	if (convert_file == NULL)
-		return;
+		return TRUE;
 
 	/* Create a new conversion job for the new file. */
 
@@ -148,7 +151,7 @@ void convert_load_file(char *filename)
 	if (convert_data == NULL) {
 		process_destroy_script_file(convert_file);
 		convert_file = NULL;
-		return;
+		return TRUE;
 	}
 
 	process_load_file(convert_data, filename);
@@ -166,6 +169,8 @@ void convert_load_file(char *filename)
 	error = xwimp_get_pointer_info(&pointer);
 	if (error == NULL)
 		windows_open_centred_at_pointer(convert_window, &pointer);
+
+	return TRUE;
 }
 
 
@@ -182,7 +187,7 @@ static void convert_drag_end_handler(wimp_pointer *pointer, void *data)
 
 	leafname = string_find_leafname(icons_get_indirected_text_addr(convert_window, ICON_CONVERT_FILENAME));
 
-	dataxfer_start_save(pointer, leafname, 0, TEXT_FILE_TYPE, 0, convert_drag_end_save_handler, NULL);
+	dataxfer_start_save(pointer, leafname, 0, osfile_TYPE_TEXT, 0, convert_drag_end_save_handler, NULL);
 }
 
 

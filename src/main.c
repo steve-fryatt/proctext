@@ -53,7 +53,6 @@
 #include "sflib/windows.h"
 #include "sflib/icons.h"
 #include "sflib/menus.h"
-#include "sflib/transfer.h"
 #include "sflib/url.h"
 #include "sflib/msgs.h"
 #include "sflib/debug.h"
@@ -69,7 +68,6 @@
 
 //#include "choices.h"
 #include "convert.h"
-#include "olddataxfer.h"
 #include "iconbar.h"
 #include "ihelp.h"
 #include "process.h"
@@ -200,7 +198,6 @@ static void main_initialise(void)
 
 	ihelp_initialise();
 	dataxfer_initialise(main_task_handle, NULL);
-	olddataxfer_initialise(); // \TODO -- Remove!
 //	choices_initialise();
 	iconbar_initialise();
 	convert_initialise();

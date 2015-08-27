@@ -36,16 +36,5 @@
 
 void convert_initialise(void);
 
-
-/**
- * Load a file for conversion, and open the conversion dialogue.
- *
- * \param *filename	The file to load.
- */
-
-void convert_load_file(char *filename);
-
-
-
 #endif
 
