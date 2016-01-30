@@ -31,6 +31,8 @@ TaskSpr:!proctext
 
 SupportURL:http://www.stevefryatt.org.uk/software/
 
+ScriptMenuTitle:Scripts
+
 # Messages and errors
 
 DragSave:To save, enter a full pathname or drag the file to a directory viewer.
