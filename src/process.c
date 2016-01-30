@@ -95,7 +95,7 @@ struct process_file {
 static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *));
 static int run_substitute(struct process_data *data, char *str, char *to, osbool cs, int verbosity, void (logger)(char *));
 static int test_memory(char *mem, char *str, osbool cs);
-static int substitute_text(struct process_data *data, char *position, int length, char *to);
+static int substitute_text(struct process_data *data, int position, int length, char *to);
 
 static int load_script(char *file, char *script, struct process_action **actions, void (logger)(char *));
 static void add_new_action(struct process_action **actions, int *items, int *size, int type, char *from, char *to, int min, int max);
@@ -411,33 +411,33 @@ char *process_script_file_name(struct process_file *file, int script)
 
 static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *))
 {
-	int	len, match_len, found, step;
-	char	*mem, *start, b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
+	int	len, match_len, found, step, offset, start;
+	char	b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
 	if (data != NULL && data->mem != NULL) {
-		mem = data->mem;
+		offset = 0;
 		match_len = 0;
 		len = strlen(str);
 
-		while (*mem != '\0') {
-			if (test_memory(mem, str, 1) == len) {
+		while (*(data->mem + offset) != '\0') {
+			if (test_memory(data->mem + offset, str, 1) == len) {
 				if (match_len == 0)
-					start = mem;
+					start = offset;
 				match_len++;
-				mem += (len - 1);
+				offset += (len - 1);
 			} else {
 				if (match_len >= minimum && (maximum == 0 || match_len <= maximum)) {
 					step = match_len + substitute_text(data, start, match_len * len, to);
-					mem += (step - 1);
+					offset += (step - 1);
 
 					found++;
 				}
 				match_len = 0;
 			}
 
-			mem++;
+			offset++;
 		}
 	}
 
@@ -455,25 +455,25 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 
 static int run_substitute(struct process_data *data, char *from, char *to, osbool cs, int verbosity, void (logger)(char *))
 {
-	int	match_len, found, step;
-	char	*mem, b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
+	int	match_len, found, step, offset;
+	char	b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
 	if (data != NULL && data->mem != NULL && from != NULL) {
-		mem = data->mem;
+		offset = 0;
 
-		while (*mem != '\0') {
-			match_len = test_memory(mem, from, cs);
+		while (*(data->mem + offset) != '\0') {
+			match_len = test_memory(data->mem + offset, from, cs);
 
 			if (match_len == strlen(from)) {
-				step = match_len + substitute_text(data, mem, match_len, to);
-				mem += (step - 1);
+				step = match_len + substitute_text(data, offset, match_len, to);
+				offset += (step - 1);
 
 				found++;
 			}
 
-			mem++;
+			offset++;
 		}
 	}
 
@@ -516,7 +516,7 @@ static int test_memory(char *mem, char *str, osbool cs)
  *
  * Parameters in:
  *   data:       pointer to the memory data structure to operate on.
- *   position:   pointer to the text to be replaced (must be in the block defined by data).
+ *   position:   offset to the text to be replaced in the *data block.
  *   length:     the number of characters to be replaced.
  *   to:         the text to replace the substituted block with.
  *
@@ -524,12 +524,12 @@ static int test_memory(char *mem, char *str, osbool cs)
  *   difference: the change in length of the target text.
  */
 
-static int substitute_text(struct process_data *data, char *position, int length, char *to)
+static int substitute_text(struct process_data *data, int position, int length, char *to)
 {
 	int	difference = 0;
 
-	if (data != NULL && data->mem != NULL && position != NULL && to != NULL &&
-			position >= data->mem && position < (data->mem + data->len)) {
+	if (data != NULL && data->mem != NULL && to != NULL &&
+			position >= 0 && position < data->len) {
 		difference = strlen(to) - length;
 
 		if (difference > 0 && (data->len + difference) > data->size)
@@ -537,11 +537,11 @@ static int substitute_text(struct process_data *data, char *position, int length
 
 		if (difference <= 0 || (data->len + difference) <= data->size) {
 			if (difference != 0) {
-				memmove(position + strlen(to), position + length, data->len - (position - data->mem));
+				memmove(data->mem + position + strlen(to), data->mem + position + length, data->len - position);
 				data->len += difference;
 			}
 
-			memcpy(position, to, strlen(to));
+			memcpy(data->mem + position, to, strlen(to));
 		}
 	}
 
