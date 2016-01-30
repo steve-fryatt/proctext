@@ -106,7 +106,7 @@ void convert_initialise(void)
 	event_add_window_mouse_event(convert_window, convert_click_handler);
 	event_add_window_menu_prepare(convert_window, convert_menu_prepare_handler);
 
-	dataxfer_set_load_target(osfile_TYPE_TEXT, wimp_ICON_BAR, -1, convert_load_file, NULL);
+	dataxfer_set_load_target(osfile_TYPE_TEXT, osfile_TYPE_TEXT, wimp_ICON_BAR, -1, convert_load_file, NULL);
 
 	event_add_window_icon_popup(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script_menu, ICON_CONVERT_SCRIPT, NULL);
 }
