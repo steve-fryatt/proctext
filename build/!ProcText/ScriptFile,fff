@@ -37,41 +37,59 @@ Sub: [10]:</p>[10][10]<p>
 # Processing for WROCC Newsletter submissions.
 
 [WROCC]
+Remove: CrLf
 Remove: ManyNewLines
-Remove: BrokenLines
+#Remove: BrokenLines
 Remove: ManySpaces
 Remove: ManyTabs
 Remove: SmartQuotes
-Sub: RISCOS:RISC[160]OS
-Sub: RiscOS:RISC[160]OS
-Sub: Risc OS:RISC[160]OS
-Sub: RISC OS:RISC[160]OS
+Sub: [32]RO[32]:[32]RISC[160]OS[32]
+Sub: [32]RO.:[32]RISC[160]OS.
+CiSub: RISCOS:RISC[160]OS
+CiSub: RISC OS:RISC[160]OS
 Sub: RISC[160]OS 2:RISC[160]OS[160]2
 Sub: RISC[160]OS 3:RISC[160]OS[160]3
 Sub: RISC[160]OS 4:RISC[160]OS[160]4
 Sub: RISC[160]OS 5:RISC[160]OS[160]5
 Sub: RISC[160]OS 6:RISC[160]OS[160]6
-Sub: icon bar:iconbar
-Sub: icon-bar:iconbar
-Sub: icon[160]bar:iconbar
 Sub: RISC[160]OS Ltd:RISCOS Ltd
-Sub: Risc PC:RiscPC
-Sub: Risc[160]PC:RiscPC
-Sub: RISC PC:RiscPC
-Sub: RISC[160]PC:RiscPC
-Sub: Model B:Model[160]B
-Sub: ModelB:Model[160]B
-Sub: A9Home:A9home
-Sub: A9 Home:A9home
-Sub: A9 home:A9home
-Sub: A9[160]Home:A9home
-Sub: A9[160]home:A9home
-Sub: Artworks:ArtWorks
-Sub: ArtWorks 2:ArtWorks[160]2
-Sub: WindowsXP:Windows[160]XP
-Sub: Windows XP: Windows[160]XP
-Sub: Windows7:Windows[160]7
-Sub: Windows 7:Windows[160]7
+CiSub: BBC BASIC:BBC[160]BASIC
+CiSub: BASIC V:BASIC[160]V
+CiSub: icon bar:iconbar
+CiSub: icon-bar:iconbar
+CiSub: iconbar:iconbar
+CiSub: icon[160]bar:iconbar
+CiSub: Risc PC:RiscPC
+CiSub: Risc[160]PC:RiscPC
+CiSub: RiscPC:RiscPC
+CiSub: Model B:Model[160]B
+CiSub: ModelB:Model[160]B
+CiSub: BBC B:BBC[160]B
+CiSub: A9Home:A9home
+CiSub: A9 Home:A9home
+CiSub: A9[160]Home:A9home
+CiSub: RaspberryPi:Raspberry[160]Pi
+CiSub: Raspberry Pi:Raspberry[160]Pi
+CiSub: Beagleboard:Beagleboard
+CiSub: Tablet PC:Tablet[160]PC
+CiSub: ArtWorks:ArtWorks
+CiSub: ArtWorks 2:ArtWorks[160]2
+CiSub: WindowsXP:Windows[160]XP
+CiSub: Windows XP: Windows[160]XP
+CiSub: Windows7:Windows[160]7
+CiSub: Windows 7:Windows[160]7
+CiSub: Windows8:Windows[160]8
+CiSub: Windows 8:Windows[160]8
+CiSub: Windows10:Windows[160]10
+CiSub: Windows 10:Windows[160]10
+CiSub: WindowsRT:Windows[160]RT
+CiSub: Windows RT:Windows[160]RT
+CiSub: Android OS:Android[160]OS
+CiSub: MS Office:MS[160]Office
+CiSub: Wi-Fi:WiFi
+CiSub: WiFi:WiFi
+CiSub: MicroSD:Micro[160]SD
+CiSub: Micro SD:Micro[160]SD
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
 Sub: --:[32][151][32]
@@ -79,6 +97,17 @@ Sub: [152]:[32][151][32]
 Sub: [32][152][32]:[32][151][32]
 Sub: [32][153][32]:[32][151][32]
 
+
+# Plain Text
+#
+# Remove typesetting characters and convert back into plain text
+
+[Plain Text]
+Remove: SmartQuotes
+Sub: [151]:--
+Sub: [152]:--
+Sub: [153]:-
+Sub: [10]:[10][10]
 
 
 #Remove: SmartQuotes | CRLF | ManySpaces | ManyTabs | BrokenLines | ManyNewLines
