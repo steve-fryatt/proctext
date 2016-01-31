@@ -62,6 +62,7 @@
 #include "sflib/string.h"
 #include "sflib/colpick.h"
 #include "sflib/event.h"
+#include "sflib/templates.h"
 
 /* Application header files */
 
@@ -71,7 +72,6 @@
 #include "convert.h"
 #include "iconbar.h"
 #include "process.h"
-#include "templates.h"
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 

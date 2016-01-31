@@ -76,7 +76,7 @@ CCFLAGS := -mlibscl -mhard-float -static -mthrowback -Wall -O2 -D'BUILD_VERSION=
 ZIPFLAGS := -x "*/.svn/*" -r -, -9
 BUZIPFLAGS := -x "*/.svn/*" -r -9
 BINDHELPFLAGS := -f -r -v
-MENUGENFLAGS := -d
+MENUGENFLAGS := -d -m
 TOKENIZEFLAGS := -warn p
 
 
@@ -117,8 +117,7 @@ READMEHDR := Header
 MENUSRC := menudef
 FINDHELPSRC := Help.bbt
 
-OBJS := convert.o iconbar.o main.o process.o templates.o
-
+OBJS := convert.o iconbar.o main.o process.o
 
 # Build everything, but don't package it for release.
 

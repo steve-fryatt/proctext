@@ -51,6 +51,7 @@
 #include "sflib/menus.h"
 #include "sflib/msgs.h"
 #include "sflib/string.h"
+#include "sflib/templates.h"
 #include "sflib/windows.h"
 
 /* Application header files */
@@ -58,7 +59,6 @@
 #include "convert.h"
 
 #include "process.h"
-#include "templates.h"
 
 /* Program Info Window */
 
@@ -319,7 +319,6 @@ static void convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_po
 {
 	if (pointer != NULL) {
 		event_set_menu_block(convert_script_menu);
-		templates_set_menu(TEMPLATES_MENU_SCRIPT_POPUP, convert_script_menu);
 	}
 }
 
