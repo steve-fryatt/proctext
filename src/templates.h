@@ -119,34 +119,5 @@ wimp_menu *templates_get_menu(enum templates_menus menu);
 
 void templates_set_menu(enum templates_menus menu, wimp_menu *address);
 
-
-/**
- * Update the interactive help token to be supplied for undefined
- * menus.
- *
- * \param *token	The token to use.
- */
-
-void templates_set_menu_token(char *token);
-
-
-/**
- * Set details of the menu handle which is currently on screen.
- *
- * \param *menu		The menu handle currently on screen.
- */
-
-void templates_set_menu_handle(wimp_menu *menu);
-
-
-/**
- * Return a pointer to the name of the current menu.
- *
- * \param *buffer	Pointer to a buffer to hold the menu name.
- * \return		Pointer to the returned name.
- */
-
-char *templates_get_current_menu_name(char *buffer);
-
 #endif
 

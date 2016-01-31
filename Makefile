@@ -1,4 +1,4 @@
-# Copyright 2011-2012, Stephen Fryatt
+# Copyright 2011-2016, Stephen Fryatt
 #
 # This file is part of ProcText:
 #
@@ -117,7 +117,7 @@ READMEHDR := Header
 MENUSRC := menudef
 FINDHELPSRC := Help.bbt
 
-OBJS := convert.o iconbar.o ihelp.o main.o process.o templates.o
+OBJS := convert.o iconbar.o main.o process.o templates.o
 
 
 # Build everything, but don't package it for release.

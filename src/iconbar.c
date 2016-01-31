@@ -41,6 +41,7 @@
 #include "sflib/errors.h"
 #include "sflib/event.h"
 #include "sflib/icons.h"
+#include "sflib/ihelp.h"
 #include "sflib/menus.h"
 #include "sflib/msgs.h"
 #include "sflib/url.h"
@@ -51,7 +52,6 @@
 #include "iconbar.h"
 
 //#include "choices.h"
-#include "ihelp.h"
 #include "main.h"
 #include "templates.h"
 
@@ -90,6 +90,7 @@ void iconbar_initialise(void)
 	wimp_icon_create	icon_bar;
 
 	iconbar_menu = templates_get_menu(TEMPLATES_MENU_ICONBAR);
+	ihelp_add_menu(iconbar_menu, "IconBarMenu");
 
 	iconbar_info_window = templates_create_window("ProgInfo");
 	templates_link_menu_dialogue("ProgInfo", iconbar_info_window);

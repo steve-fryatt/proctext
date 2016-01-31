@@ -47,6 +47,7 @@
 #include "sflib/errors.h"
 #include "sflib/event.h"
 #include "sflib/icons.h"
+#include "sflib/ihelp.h"
 #include "sflib/menus.h"
 #include "sflib/msgs.h"
 #include "sflib/string.h"
@@ -56,7 +57,6 @@
 
 #include "convert.h"
 
-#include "ihelp.h"
 #include "process.h"
 #include "templates.h"
 
@@ -330,7 +330,7 @@ static void convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_po
 
 static wimp_menu *convert_script_menu_build(void)
 {
-	int	line, scripts, width;
+	int	line, scripts, width, len;
 	char	*name;
 
 	convert_script_menu_destroy();
@@ -355,6 +355,8 @@ static wimp_menu *convert_script_menu_build(void)
 		return NULL;
 	}
 
+	ihelp_add_menu(convert_script_menu, "ScriptMenu");
+
 	/* Populate the menu. */
 
 	line = 0;
@@ -367,26 +369,30 @@ static wimp_menu *convert_script_menu_build(void)
 
 		name = strdup(process_script_file_name(convert_file, line));
 
-		if (name == NULL)
-			name = "?";
+		len = (name == NULL) ? 1 : strlen(name);
 
-		if (strlen(name) > width)
-			width = strlen(name);
+		if (len > width)
+			width = len;
 
 		/* Set the menu and icon flags up. */
 
 		convert_script_menu->entries[line].menu_flags = 0;
 
 		convert_script_menu->entries[line].sub_menu = (wimp_menu *) -1;
-		convert_script_menu->entries[line].icon_flags = wimp_ICON_TEXT | wimp_ICON_FILLED | wimp_ICON_INDIRECTED |
+		convert_script_menu->entries[line].icon_flags = wimp_ICON_TEXT | wimp_ICON_FILLED |
 				wimp_COLOUR_BLACK << wimp_ICON_FG_COLOUR_SHIFT |
 				wimp_COLOUR_WHITE << wimp_ICON_BG_COLOUR_SHIFT;
 
 		/* Set the menu icon contents up. */
 
-		convert_script_menu->entries[line].data.indirected_text.text = name;
-		convert_script_menu->entries[line].data.indirected_text.validation = NULL;
-		convert_script_menu->entries[line].data.indirected_text.size = strlen(name);
+		if (name != NULL) {
+			convert_script_menu->entries[line].data.indirected_text.text = name;
+			convert_script_menu->entries[line].data.indirected_text.validation = NULL;
+			convert_script_menu->entries[line].data.indirected_text.size = strlen(name);
+			convert_script_menu->entries[line].icon_flags |= wimp_ICON_INDIRECTED;
+		} else {
+			strncpy(convert_script_menu->entries[line].data.text, "?", 12);
+		}
 
 		line++;
 	}
@@ -417,10 +423,12 @@ static void convert_script_menu_destroy(void)
 {
 	int	line = 0;
 
-	return;
+	ihelp_remove_menu(convert_script_menu);
+
 	if (convert_script_menu != NULL) {
 		do {
-			if (convert_script_menu->entries[line].data.indirected_text.text != NULL)
+			if ((convert_script_menu->entries[line].icon_flags & wimp_ICON_INDIRECTED) != 0 &&
+					convert_script_menu->entries[line].data.indirected_text.text != NULL)
 				free(convert_script_menu->entries[line].data.indirected_text.text);
 		} while ((convert_script_menu->entries[line++].menu_flags & wimp_MENU_LAST) == 0);
 

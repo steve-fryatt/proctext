@@ -53,14 +53,8 @@
 
 #include "templates.h"
 
-#include "ihelp.h"
-
-#define TEMPLATES_HELP_TOKEN_LENGTH 64
-
-static wimp_menu	*menu_up = NULL;					/**< The currently open menu.					*/
 static wimp_menu	*templates_menu_list[TEMPLATES_MENU_MAX_EXTENT];	/**< The menu definitions loaded from the menus template.	*/
 static menu_template	menu_definitions;					/**< The menu definition block handle.				*/
-static char		templates_menu_help_token[TEMPLATES_HELP_TOKEN_LENGTH];	/**< The current token to be used for interactive help.		*/
 
 
 /**
@@ -144,7 +138,6 @@ wimp_w templates_create_window(char *name)
 void templates_load_menus(char *file)
 {
 	menu_definitions = menus_load_templates(file, NULL, templates_menu_list, TEMPLATES_MENU_MAX_EXTENT);
-	event_set_menu_pointer(&menu_up);
 }
 
 
@@ -191,58 +184,5 @@ void templates_set_menu(enum templates_menus menu, wimp_menu *address)
 	if (menu >= 0 && menu < TEMPLATES_MENU_MAX_EXTENT)
 		templates_menu_list[menu] = address;
 
-}
-
-
-/**
- * Update the interactive help token to be supplied for undefined
- * menus.
- *
- * \param *token	The token to use, or NULL to unset.
- */
-
-void templates_set_menu_token(char *token)
-{
-	if (token == NULL)
-		strcpy(templates_menu_help_token, "");
-	else
-		strcpy(templates_menu_help_token, token);
-}
-
-
-/**
- * Set details of the menu handle which is currently on screen.
- *
- * \param *menu		The menu handle currently on screen.
- */
-
-void templates_set_menu_handle(wimp_menu *menu)
-{
-	menu_up = menu;
-}
-
-
-/**
- * Return a pointer to the name of the current menu.
- *
- * \param *buffer	Pointer to a buffer to hold the menu name.
- * \return		Pointer to the returned name.
- */
-
-char *templates_get_current_menu_name(char *buffer)
-{
-	if (buffer == NULL)
-		return NULL;
-
-	*buffer = '\0';
-
-	if (menu_up == templates_menu_list[TEMPLATES_MENU_ICONBAR])
-		strcpy(buffer, "IconBarMenu");
-	else if (menu_up == templates_menu_list[TEMPLATES_MENU_SCRIPT_POPUP])
-		strcpy(buffer, "ScriptMenu");
-	else
-		strcpy(buffer, templates_menu_help_token);
-
-	return buffer;
 }
 

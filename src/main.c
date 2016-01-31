@@ -52,6 +52,7 @@
 #include "sflib/heap.h"
 #include "sflib/windows.h"
 #include "sflib/icons.h"
+#include "sflib/ihelp.h"
 #include "sflib/menus.h"
 #include "sflib/url.h"
 #include "sflib/msgs.h"
@@ -69,7 +70,6 @@
 //#include "choices.h"
 #include "convert.h"
 #include "iconbar.h"
-#include "ihelp.h"
 #include "process.h"
 #include "templates.h"
 
