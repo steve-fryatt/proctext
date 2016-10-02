@@ -69,6 +69,7 @@
 #define ICON_CONVERT_SCRIPTMENU 4
 #define ICON_CONVERT_SCRIPT 5
 
+#define SCRAP_FILENAME_LEN 64
 #define SCRIPT_MENU_TITLE_LEN 64
 
 
@@ -124,6 +125,7 @@ static osbool convert_load_file(wimp_w w, wimp_i i, unsigned filetype, char *fil
 	wimp_pointer	pointer;
 	wimp_menu	*popup;
 	os_error	*error;
+	char		*window_filename, scrap_filename[SCRAP_FILENAME_LEN];
 
 	/* Abandon any existing conversion process. */
 
@@ -163,7 +165,14 @@ static osbool convert_load_file(wimp_w w, wimp_i i, unsigned filetype, char *fil
 
 	convert_script = 0;
 
-	icons_printf(convert_window, ICON_CONVERT_FILENAME, "%s2", filename);
+	if (strcmp(filename, "<Wimp$Scrap>") == 0) {
+		msgs_lookup("ScrapFilename", scrap_filename, SCRAP_FILENAME_LEN);
+		window_filename = scrap_filename;
+	} else {
+		window_filename = filename;
+	}
+
+	icons_printf(convert_window, ICON_CONVERT_FILENAME, "%s2", window_filename);
 	event_set_window_icon_popup_selection(convert_window, ICON_CONVERT_SCRIPTMENU, convert_script);
 
 	error = xwimp_get_pointer_info(&pointer);
