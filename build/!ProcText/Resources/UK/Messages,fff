@@ -38,17 +38,6 @@ ScrapFilename:Conversion
 # Messages and errors
 
 DragSave:To save, enter a full pathname or drag the file to a directory viewer.
-NoQueueDir:The queue directory is invalid.
-FOpenFailed:The PDF file could not be created: does it already exist?
-UnknownFileData:The file contained unrecognised tokens: some data may have been discarded.
-UnknownFileFormat:The file format version wasn't known: some data may have been lost.
-
-FileNotSaved:This bookmark file is not saved: do you wish to close it anyway?
-FileNotSavedB:Discard,Cancel,Save
-FilesNotSaved:There are unsaved bookmarks files: do you want to quit anyway?
-FilesNotSavedB:Discard,Cancel
-PendingJobs:There are print jobs queued: do you want to quit anyway?
-PendingJobsB:Discard,Cancel
 
 # Interactive Help for windows and icons.
 #
