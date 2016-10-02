@@ -214,7 +214,7 @@ static osbool convert_drag_end_save_handler(char *filename, void *data)
 	convert_process_and_save(filename);
 	convert_close_window();
 
-	return 0;
+	return TRUE;
 }
 
 
