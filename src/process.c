@@ -424,6 +424,7 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 
 	if (data != NULL && data->mem != NULL) {
 		offset = 0;
+		start = 0;
 		match_len = 0;
 		len = strlen(str);
 
