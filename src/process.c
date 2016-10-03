@@ -277,6 +277,9 @@ osbool process_run_script(struct process_data *data, struct process_file *file, 
 		case ACTION_REDUCE:
 			run_reduce(data, actions[i].from, actions[i].to, actions[i].minimum, actions[i].maximum, verbosity, logger);
 			break;
+		case ACTION_COMMAND:
+		case ACTION_NONE:
+			break;
 		}
 	}
 
@@ -640,6 +643,8 @@ static int load_script(char *file, char *script, struct process_action **actions
 					add_new_action(actions, &items, &size, ACTION_COMMAND, value, "", 0, 0);
 				}
 			}
+			break;
+		case sf_CONFIG_READ_EOF:
 			break;
 		}
 	}

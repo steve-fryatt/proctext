@@ -58,22 +58,80 @@ CiSub: BASIC V:BASIC[160]V
 CiSub: icon bar:iconbar
 CiSub: icon-bar:iconbar
 CiSub: iconbar:iconbar
+CiSub: sprite file:spritefile
+CiSub: draw file:drawfile
+CiSub: pin board:pinboard
 CiSub: icon[160]bar:iconbar
 CiSub: Risc PC:RiscPC
 CiSub: Risc[160]PC:RiscPC
 CiSub: RiscPC:RiscPC
+CiSub: BBC Micro:BBC[160]Micro
+CiSub: BBC Master:BBC[160]Master
 CiSub: Model B:Model[160]B
 CiSub: ModelB:Model[160]B
 CiSub: BBC B:BBC[160]B
+CiSub: ADFS:ADFS
+CiSub: SCSIFS:SCSIFS
+CiSub: SDFS:SDFS
+CiSub: HostFS:HostFS
 CiSub: A9Home:A9home
 CiSub: A9 Home:A9home
 CiSub: A9[160]Home:A9home
+CiSub: IyonixPC:Iyonix
+CiSub: Iyonix PC:Iyonix
+CiSub: Iyonix[160]PC:Iyonix
 CiSub: RaspberryPi:Raspberry[160]Pi
 CiSub: Raspberry Pi:Raspberry[160]Pi
+CiSub: Pi2:Pi[160]2
+CiSub: Pi 2:Pi[160]2
 CiSub: Beagleboard:Beagleboard
+CiSub: Pandaboard:Pandaboard
+CiSub: ARMini:ARMini
+CiSub: ARMini X:ARMiniX
+CiSub: ARMini[160]X:ARMiniX
+CiSub: ARMX6:ARMX6
+CiSub: TiMachine:TiMachine
+CiSub: PandaRo:PandaRo
+CiSub: RapidOIg:RapidO[160]Ig
+CiSub: RapidO Ig:RapidO[160]Ig
+CiSub: RapidO[160]Ig:RapidO[160]Ig
+CiSub: RapidOTi:RapidO[160]Ti
+CiSub: RapidO Ti:RapidO[160]Ti
+CiSub: RapidO[160]Ti:RapidO[160]Ti
 CiSub: Tablet PC:Tablet[160]PC
+CiSub: Pi-Top:Pi-Top
+CiSub: PiTop:Pi-Top
+CiSub: Pi Top:Pi-Top
+CiSub: Pi[160]Top:Pi-Top
+CiSub: Titanium:Titanium
+CiSub: IGEPv5:IGEPv5
+CiSub: IGEP v5:IGEPv5
+CiSub: IGEP[160]v5:IGEPv5
+CiSub: ARMV5:ARMv5
+CiSub: ARMV6:ARMv6
+CiSub: ARMV7:ARMv7
+CiSub: 26-bit:26-bit
+CiSub: 26 bit:26-bit
+CiSub: 26[160]bit:26-bit
+CiSub: 26bit:26-bit
+CiSub: 32-bit:32-bit
+CiSub: 32 bit:32-bit
+CiSub: 32[160]bit:32-bit
+CiSub: 32bit:32-bit
 CiSub: ArtWorks:ArtWorks
 CiSub: ArtWorks 2:ArtWorks[160]2
+CiSub: Impression II:Impression[160]II
+CiSub: ImpressionII:Impression[160]II
+CiSub: Impression 2:Impression[160]II
+CiSub: Impression2:Impression[160]II
+CiSub: Impression-X:Impression-X
+CiSub: ImpressionX:Impression-X
+CiSub: Impression X:Impression-X
+CiSub: Impression[160]X:Impression-X
+CiSub: Messenger Pro:Messenger[160]Pro
+CiSub: MessengerPro:Messenger[160]Pro
+CiSub: Ovation Pro:Ovation[160]Pro
+CiSub: OvationPro:Ovation[160]Pro
 CiSub: WindowsXP:Windows[160]XP
 CiSub: Windows XP: Windows[160]XP
 CiSub: Windows7:Windows[160]7
@@ -84,12 +142,23 @@ CiSub: Windows10:Windows[160]10
 CiSub: Windows 10:Windows[160]10
 CiSub: WindowsRT:Windows[160]RT
 CiSub: Windows RT:Windows[160]RT
+CiSub: AndroidOS:Android[160]OS
 CiSub: Android OS:Android[160]OS
 CiSub: MS Office:MS[160]Office
 CiSub: Wi-Fi:WiFi
 CiSub: WiFi:WiFi
+CiSub: HDMI:HDMI
+CiSub: Virtual Acorn:Virtual Acorn
+CiSub: VirtualAcorn:Virtual Acorn
+CiSub: Virtual[160]Acorn:Virtual Acorn
 CiSub: MicroSD:Micro[160]SD
 CiSub: Micro SD:Micro[160]SD
+CiSub: RPCEmu:RPCEmu
+CiSub: RPC Emu:RPCEmu
+CiSub: RPC[160]Emu:RPCEmu
+CiSub: ArcEm:ArcEm
+CiSub: Arc Em:ArcEm
+CiSub: Arc[160]Em:ArcEm
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
 Sub: --:[32][151][32]
