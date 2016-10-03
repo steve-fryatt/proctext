@@ -258,10 +258,12 @@ static osbool convert_immediate_window_save(void)
 static osbool convert_process_and_save(char *filename)
 {
 	int	swi;
+	char	log[128];
 
 	convert_logger_available = (xos_swi_number_from_string("Report_Text0", &swi) == NULL) ? TRUE : FALSE;
 
-	convert_logger("\\GConverting file");
+	msgs_lookup("Convert", log, 128);
+	convert_logger(log);
 
 	convert_script = event_get_window_icon_popup_selection(convert_window, ICON_CONVERT_SCRIPTMENU);
 

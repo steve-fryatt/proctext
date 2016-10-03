@@ -43,6 +43,7 @@
 /* SF-Lib header files. */
 
 #include "sflib/config.h"
+#include "sflib/msgs.h"
 #include "sflib/string.h"
 
 /* Application header files */
@@ -421,7 +422,7 @@ char *process_script_file_name(struct process_file *file, int script)
 static int run_reduce(struct process_data *data, char *str, char *to, int minimum, int maximum, int verbosity, void (logger)(char *))
 {
 	int	len, match_len, found, step, offset, start;
-	char	b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
+	char	b1[15], b2[15], b3[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
@@ -452,8 +453,9 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 	}
 
 	if (logger != NULL && (found > 0 || verbosity > 0)) {
-		snprintf(log, PROCESS_LOG_LINE_LEN, "Reducing multiple '%s' to '%s': reduced %d\n",
-				write_ctrl_chars(b1, str, 15), write_ctrl_chars(b2, to, 15), found);
+		snprintf(b3, 15, "%d", found);
+		msgs_param_lookup("Reducing", log, PROCESS_LOG_LINE_LEN,
+				write_ctrl_chars(b1, str, 15), write_ctrl_chars(b2, to, 15), b3, NULL);
 		logger(log);
 	}
 
@@ -466,7 +468,7 @@ static int run_reduce(struct process_data *data, char *str, char *to, int minimu
 static int run_substitute(struct process_data *data, char *from, char *to, osbool cs, int verbosity, void (logger)(char *))
 {
 	int	match_len, found, step, offset;
-	char	b1[15], b2[15], log[PROCESS_LOG_LINE_LEN];
+	char	b1[15], b2[15], b3[15], log[PROCESS_LOG_LINE_LEN];
 
 	found = 0;
 
@@ -488,8 +490,9 @@ static int run_substitute(struct process_data *data, char *from, char *to, osboo
 	}
 
 	if (logger != NULL && (found > 0 || verbosity > 0)) {
-		snprintf(log, PROCESS_LOG_LINE_LEN, "Substituting '%s' with '%s': replaced %d\n",
-				write_ctrl_chars(b1, from, 15), write_ctrl_chars(b2, to, 15), found);
+		snprintf(b3, 15, "%d", found);
+		msgs_param_lookup("Subbing", log, PROCESS_LOG_LINE_LEN,
+				write_ctrl_chars(b1, from, 15), write_ctrl_chars(b2, to, 15), b3, NULL);
 		logger(log);
 	}
 
@@ -603,7 +606,7 @@ static int load_script(char *file, char *script, struct process_action **actions
 
 						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE_CASE_SENSITIVE, value, bkpt, 0, 0);
 					} else {
-						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid substitution values '%s'.\n", value);
+						msgs_param_lookup("BadSub", log, PROCESS_LOG_LINE_LEN, value, NULL, NULL, NULL);
 						if (logger != NULL)
 							logger(log);
 					}
@@ -614,7 +617,7 @@ static int load_script(char *file, char *script, struct process_action **actions
 
 						add_new_action(actions, &items, &size, ACTION_SUBSTITUTE, value, bkpt, 0, 0);
 					} else {
-						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid substitution values '%s'.\n", value);
+						msgs_param_lookup("BadSub", log, PROCESS_LOG_LINE_LEN, value, NULL, NULL, NULL);
 						if (logger != NULL)
 							logger(log);
 					}
@@ -635,7 +638,7 @@ static int load_script(char *file, char *script, struct process_action **actions
 					} else if (string_nocase_strcmp(value, "manytabs") == 0) {
 						add_new_action(actions, &items, &size, ACTION_REDUCE, "[9]", "[9]", 2, 0);
 					} else {
-						snprintf(log, PROCESS_LOG_LINE_LEN, "Invalid remove command '%s'.\n", value);
+						msgs_param_lookup("BadRemove", log, PROCESS_LOG_LINE_LEN, value, NULL, NULL, NULL);
 						if (logger != NULL)
 							logger(log);
 					}

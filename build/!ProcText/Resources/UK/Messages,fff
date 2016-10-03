@@ -39,6 +39,14 @@ ScrapFilename:Conversion
 
 DragSave:To save, enter a full pathname or drag the file to a directory viewer.
 
+# Log Messages
+
+Convert:\GConverting File
+Subbing:Substituting '%0' with '%1': replaced %2.
+Reducing:Reducing multiple '%0' to '%1': reduced %2.
+BadSub:Invalid substitution values '%0'.
+BadRemove:Invalid remove command '%0'.
+
 # Interactive Help for windows and icons.
 #
 # Window icon data (particularly toolbar items) may be in menu data when duplicates exist.
