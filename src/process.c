@@ -1,4 +1,4 @@
-/* Copyright 2009-2014, Stephen Fryatt
+/* Copyright 2009-2016, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -220,19 +220,20 @@ void process_load_file(struct process_data *data, char *filename)
  *
  * \param data		pointer to the memory data structure to save to file.
  * \param filename	the file to save the data to.
+ * \return		TRUE if successful; FALSE on failure.
  */
 
-void process_save_file(struct process_data *data, char *filename)
+osbool process_save_file(struct process_data *data, char *filename)
 {
 	FILE	*f;
 	char	*ptr;
 
 	if (data == NULL || filename == NULL || *filename == '\0')
-		return;
+		return FALSE;
 
 	f = fopen(filename, "w");
 	if (f == NULL)
-		return;
+		return FALSE;
 
 	ptr = data->mem;
 
@@ -240,6 +241,8 @@ void process_save_file(struct process_data *data, char *filename)
 		fputc(*ptr++, f);
 
 	fclose(f);
+
+	return TRUE;
 }
 
 
@@ -251,15 +254,16 @@ void process_save_file(struct process_data *data, char *filename)
  * \param script	The number of the script within the file.
  * \param verbosity	The level of logging verbosity, larger == more.
  * \param *logger	A callback to handle logging output.
+ * \return		TRUE on success; FALSE on failure.
  */
 
-void process_run_script(struct process_data *data, struct process_file *file, int script, int verbosity, void (logger)(char *))
+osbool process_run_script(struct process_data *data, struct process_file *file, int script, int verbosity, void (logger)(char *))
 {
 	struct process_action	*actions = NULL;
 	int			items, i;
 
 	if (data == NULL || file == NULL || script < 0 || script >= file->count)
-		return;
+		return FALSE;
 
 	items = load_script(file->filename, file->scripts[script].name, &actions, logger);
 
@@ -275,6 +279,8 @@ void process_run_script(struct process_data *data, struct process_file *file, in
 			break;
 		}
 	}
+
+	return TRUE;
 }
 
 

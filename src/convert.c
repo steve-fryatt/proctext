@@ -1,4 +1,4 @@
-/* Copyright 2009-2012, Stephen Fryatt
+/* Copyright 2009-2016, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -79,7 +79,7 @@ static void		convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_p
 static void		convert_drag_end_handler(wimp_pointer *pointer, void *data);
 static osbool		convert_drag_end_save_handler(char *filename, void *data);
 static osbool		convert_immediate_window_save(void);
-static void		convert_process_and_save(char *filename);
+static osbool		convert_process_and_save(char *filename);
 static void		convert_close_window();
 static wimp_menu	*convert_script_menu_build(void);
 static void		convert_script_menu_destroy(void);
@@ -211,7 +211,9 @@ static void convert_drag_end_handler(wimp_pointer *pointer, void *data)
 
 static osbool convert_drag_end_save_handler(char *filename, void *data)
 {
-	convert_process_and_save(filename);
+	if (!convert_process_and_save(filename))
+		return FALSE;
+
 	convert_close_window();
 
 	return TRUE;
@@ -237,7 +239,9 @@ static osbool convert_immediate_window_save(void)
 		return FALSE;
 	}
 
-	convert_process_and_save(filename);
+	if (!convert_process_and_save(filename))
+		return FALSE;
+
 	convert_close_window();
 
 	return TRUE;
@@ -248,9 +252,10 @@ static osbool convert_immediate_window_save(void)
  * Run the selected conversion on the current file, and save the result out.
  *
  * \param *filename		The filename of the file to take the result.
+ * \return			TRUE if the process completed successfully; FALSE on failure.
  */
 
-static void convert_process_and_save(char *filename)
+static osbool convert_process_and_save(char *filename)
 {
 	int	swi;
 
@@ -260,8 +265,13 @@ static void convert_process_and_save(char *filename)
 
 	convert_script = event_get_window_icon_popup_selection(convert_window, ICON_CONVERT_SCRIPTMENU);
 
-	process_run_script(convert_data, convert_file, convert_script, 1, convert_logger);
-	process_save_file(convert_data, filename);
+	if (!process_run_script(convert_data, convert_file, convert_script, 1, convert_logger))
+		return FALSE;
+
+	if (!process_save_file(convert_data, filename))
+		return FALSE;
+
+	return TRUE;
 }
 
 
