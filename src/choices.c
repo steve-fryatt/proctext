@@ -145,15 +145,6 @@ static void choices_close_window(void)
 static void choices_set_window(void)
 {
 	icons_printf(choices_window, CHOICE_ICON_SCRIPT_FILE, "%s", config_str_read("ScriptFile"));
-
-//	icons_set_selected(choices_window, CHOICE_ICON_STORE_ALL, config_opt_read("StoreAllFiles"));
-//	icons_set_selected(choices_window, CHOICE_ICON_IMAGE_FS, config_opt_read("ImageFS"));
-//	icons_set_selected(choices_window, CHOICE_ICON_SUPPRESS_ERRORS, config_opt_read("SuppressErrors"));
-//	icons_set_selected(choices_window, CHOICE_ICON_FULL_INFO, config_opt_read("FullInfoDisplay"));
-//	icons_set_selected(choices_window, CHOICE_ICON_PLUGIN_QUIT, config_opt_read("QuitAsPlugin"));
-//	icons_set_selected(choices_window, CHOICE_ICON_PLUGIN_WINDOW, config_opt_read("SearchWindAsPlugin"));
-//	icons_set_selected(choices_window, CHOICE_ICON_AUTOSCROLL, config_opt_read("ScrollResults"));
-//	icons_set_selected(choices_window, CHOICE_ICON_VALIDATE_PATHS, config_opt_read("ValidatePaths"));
 }
 
 
@@ -165,29 +156,7 @@ static void choices_set_window(void)
 
 static osbool choices_read_window(void)
 {
-	wimp_error_box_selection	selection;
-
-	/* Validate the search paths. */
-
-//	if (!search_validate_paths(icons_get_indirected_text_addr(choices_window, CHOICE_ICON_SEARCH_PATH), FALSE)) {
-//		selection = error_msgs_report_question("BadConfigPaths", "BadConfigPathsB");
-
-//		if (selection == 1)
-//			return FALSE;
-//	}
-
-	/* Read the main window. */
-
 	config_str_set("ScriptFile", icons_get_indirected_text_addr(choices_window, CHOICE_ICON_SCRIPT_FILE));
-
-//	config_opt_set("StoreAllFiles", icons_get_selected(choices_window, CHOICE_ICON_STORE_ALL));
-//	config_opt_set("ImageFS", icons_get_selected(choices_window, CHOICE_ICON_IMAGE_FS));
-//	config_opt_set("SuppressErrors", icons_get_selected(choices_window, CHOICE_ICON_SUPPRESS_ERRORS));
-//	config_opt_set("FullInfoDisplay", icons_get_selected(choices_window, CHOICE_ICON_FULL_INFO));
-//	config_opt_set("QuitAsPlugin", icons_get_selected(choices_window, CHOICE_ICON_PLUGIN_QUIT));
-//	config_opt_set("SearchWindAsPlugin", icons_get_selected(choices_window, CHOICE_ICON_PLUGIN_WINDOW));
-//	config_opt_set("ScrollResults", icons_get_selected(choices_window, CHOICE_ICON_AUTOSCROLL));
-//	config_opt_set("ValidatePaths", icons_get_selected(choices_window, CHOICE_ICON_VALIDATE_PATHS));
 
 	return TRUE;
 }
