@@ -1,4 +1,4 @@
-/* Copyright 2009-2015, Stephen Fryatt
+/* Copyright 2009-2016, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -68,7 +68,7 @@
 
 #include "main.h"
 
-//#include "choices.h"
+#include "choices.h"
 #include "convert.h"
 #include "iconbar.h"
 #include "process.h"
@@ -198,7 +198,7 @@ static void main_initialise(void)
 
 	ihelp_initialise();
 	dataxfer_initialise(main_task_handle, NULL);
-//	choices_initialise();
+	choices_initialise();
 	iconbar_initialise();
 	convert_initialise();
 //	process_initialise();

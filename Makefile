@@ -30,7 +30,7 @@ APP := !ProcText
 SHHELP := ProcText,3d6
 HTMLHELP := manual.html
 
-OBJS = convert.o iconbar.o main.o process.o
+OBJS = choices.o convert.o iconbar.o main.o process.o
 
 include $(SFTOOLS_MAKE)/CApp
 
