@@ -39,6 +39,7 @@
 /* OSLib Header files. */
 
 #include "oslib/osbyte.h"
+#include "oslib/osfile.h"
 #include "oslib/wimp.h"
 
 /* SF-Lib Header files. */
@@ -66,8 +67,9 @@
 #define CHOICE_ICON_APPLY 0
 #define CHOICE_ICON_SAVE 1
 #define CHOICE_ICON_CANCEL 2
-#define CHOICE_ICON_DEFAULT_SCRIPT_POPUP 5
-#define CHOICE_ICON_DEFAULT_SCRIPT 6
+#define CHOICE_ICON_SCRIPT_FILE 5
+#define CHOICE_ICON_DEFAULT_SCRIPT_POPUP 7
+#define CHOICE_ICON_DEFAULT_SCRIPT 8
 
 
 /* Global variables */
@@ -81,6 +83,8 @@ static void	choices_redraw_window(void);
 
 static void	choices_click_handler(wimp_pointer *pointer);
 static osbool	choices_keypress_handler(wimp_key *key);
+
+static osbool handle_choices_icon_drop(wimp_message *message);
 
 
 /**
@@ -100,6 +104,8 @@ void choices_initialise(void)
 
 	event_add_window_mouse_event(choices_window, choices_click_handler);
 	event_add_window_key_event(choices_window, choices_keypress_handler);
+
+	event_add_message_handler(message_DATA_LOAD, EVENT_MESSAGE_INCOMING, handle_choices_icon_drop);
 }
 
 
@@ -118,7 +124,7 @@ void choices_open_window(wimp_pointer *pointer)
 
 	windows_open_centred_at_pointer(choices_window, pointer);
 
-//	icons_put_caret_at_end(choices_window, CHOICE_ICON_SEARCH_PATH);
+	icons_put_caret_at_end(choices_window, CHOICE_ICON_SCRIPT_FILE);
 }
 
 
@@ -138,7 +144,7 @@ static void choices_close_window(void)
 
 static void choices_set_window(void)
 {
-//	icons_printf(choices_window, CHOICE_ICON_SEARCH_PATH, "%s", config_str_read("SearchPath"));
+	icons_printf(choices_window, CHOICE_ICON_SCRIPT_FILE, "%s", config_str_read("ScriptFile"));
 
 //	icons_set_selected(choices_window, CHOICE_ICON_STORE_ALL, config_opt_read("StoreAllFiles"));
 //	icons_set_selected(choices_window, CHOICE_ICON_IMAGE_FS, config_opt_read("ImageFS"));
@@ -172,7 +178,7 @@ static osbool choices_read_window(void)
 
 	/* Read the main window. */
 
-//	config_str_set("SearchPath", icons_get_indirected_text_addr(choices_window, CHOICE_ICON_SEARCH_PATH));
+	config_str_set("ScriptFile", icons_get_indirected_text_addr(choices_window, CHOICE_ICON_SCRIPT_FILE));
 
 //	config_opt_set("StoreAllFiles", icons_get_selected(choices_window, CHOICE_ICON_STORE_ALL));
 //	config_opt_set("ImageFS", icons_get_selected(choices_window, CHOICE_ICON_IMAGE_FS));
@@ -193,7 +199,7 @@ static osbool choices_read_window(void)
 
 static void choices_redraw_window(void)
 {
-//	wimp_set_icon_state(choices_window, CHOICE_ICON_SEARCH_PATH, 0, 0);
+	wimp_set_icon_state(choices_window, CHOICE_ICON_SCRIPT_FILE, 0, 0);
 
 	icons_replace_caret_in_window(choices_window);
 }
@@ -271,6 +277,44 @@ static osbool choices_keypress_handler(wimp_key *key)
 		return FALSE;
 		break;
 	}
+
+	return TRUE;
+}
+
+
+/**
+ * Check incoming Message_DataSave to see if it's a file being dropped into the
+ * the search path icon.
+ *
+ * \param *message		The incoming message block.
+ * \return			TRUE if we claim the message as intended for us; else FALSE.
+ */
+
+static osbool handle_choices_icon_drop(wimp_message *message)
+{
+	wimp_full_message_data_xfer	*datasave = (wimp_full_message_data_xfer *) message;
+
+
+	/* If it isn't our window, don't claim the message as someone else
+	 * might want it.
+	 */
+
+	if (datasave == NULL || datasave->w != choices_window)
+		return FALSE;
+
+	/* If it is our window, but not the icon or filetype that  we
+	 * care about, claim the message.
+	 */
+
+	if (datasave->i != CHOICE_ICON_SCRIPT_FILE || datasave->file_type != osfile_TYPE_TEXT)
+		return TRUE;
+
+	/* It's our window and the correct icon, so copy the filename and refresh the icon. */
+
+	icons_printf(datasave->w, datasave->i, "%s", datasave->file_name);
+
+	icons_replace_caret_in_window(datasave->w);
+	wimp_set_icon_state(datasave->w, datasave->i, 0, 0);
 
 	return TRUE;
 }
