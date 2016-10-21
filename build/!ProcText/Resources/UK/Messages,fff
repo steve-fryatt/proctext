@@ -37,6 +37,7 @@ ScrapFilename:Conversion
 
 # Messages and errors
 
+BadTemplate:Failed to load template.
 DragSave:To save, enter a full pathname or drag the file to a directory viewer.
 
 # Log Messages
