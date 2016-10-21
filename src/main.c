@@ -87,7 +87,7 @@ static osbool	main_message_prequit(wimp_message *message);
 
 wimp_t			main_task_handle;
 int			main_quit_flag = FALSE;
-osspriteop_area		*main_wimp_sprites;
+//osspriteop_area		*main_wimp_sprites;
 
 
 /**
@@ -147,7 +147,7 @@ static void main_initialise(void)
 {
 	static char		task_name[255];
 	char			resources[255], res_temp[255];
-	osspriteop_area		*sprites;
+//	osspriteop_area		*sprites;
 
 
 	hourglass_on();
@@ -187,9 +187,11 @@ static void main_initialise(void)
 
 	/* Load the window templates. */
 
-	sprites = resources_load_user_sprite_area("<ProcText$Dir>.Sprites");
+//	sprites = resources_load_user_sprite_area("<ProcText$Dir>.Sprites");
+//	if (sprites == NULL)
+//		error_msgs_report_fatal("NoSprites");
 
-	main_wimp_sprites = sprites;
+//	main_wimp_sprites = sprites;
 
 	snprintf(res_temp, sizeof(res_temp), "%s.Templates", resources);
 	templates_open(res_temp);
