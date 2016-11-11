@@ -84,6 +84,8 @@ CiSub: RaspberryPi:Raspberry[160]Pi
 CiSub: Raspberry Pi:Raspberry[160]Pi
 CiSub: Pi2:Pi[160]2
 CiSub: Pi 2:Pi[160]2
+CiSub: Pi3:Pi[160]3
+CiSub: Pi 3:Pi[160]3
 CiSub: PiZero:Pi[160]Zero
 CiSub: Pi Zero:Pi[160]Zero
 CiSub: Pi B:Pi[160]B
