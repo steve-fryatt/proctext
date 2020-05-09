@@ -301,7 +301,7 @@ struct process_file *process_load_script_file(char *filename)
 	struct process_file		*file = NULL;
 	enum config_read_status		result;
 	int				i;
-	char				token[64], value[1024], section[128];
+	char				token[sf_MAX_CONFIG_FILE_BUFFER], value[sf_MAX_CONFIG_FILE_BUFFER], section[sf_MAX_CONFIG_FILE_BUFFER];
 
 	if (filename == NULL || *filename == '\0')
 		return NULL;
@@ -580,7 +580,7 @@ static int load_script(char *file, char *script, struct process_action **actions
 	enum config_read_status		result;
 	bool				found = FALSE;
 	int				items = 0, size = 0;
-	char				token[64], value[1024], section[128], *bkpt, log[PROCESS_LOG_LINE_LEN];
+	char				token[sf_MAX_CONFIG_FILE_BUFFER], value[sf_MAX_CONFIG_FILE_BUFFER], section[sf_MAX_CONFIG_FILE_BUFFER], *bkpt, log[PROCESS_LOG_LINE_LEN];
 
 	size = ACTIONS_ALLOC_BLOCK;
 	*actions = malloc(size * sizeof(struct process_action));
