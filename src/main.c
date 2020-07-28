@@ -1,4 +1,4 @@
-/* Copyright 2009-2016, Stephen Fryatt
+/* Copyright 2009-2020, Stephen Fryatt
  *
  * This file is part of ProcText:
  *
@@ -38,6 +38,7 @@
 #include "oslib/wimp.h"
 #include "oslib/os.h"
 #include "oslib/osbyte.h"
+#include "oslib/osfile.h"
 #include "oslib/osspriteop.h"
 #include "oslib/uri.h"
 #include "oslib/hourglass.h"
@@ -74,6 +75,18 @@
 #include "process.h"
 
 /* ------------------------------------------------------------------------------------------------------------------ */
+
+/**
+ * The size of buffer allocated to resource filename processing.
+ */
+
+#define MAIN_FILENAME_BUFFER_LEN 1024
+
+/**
+ * The size of buffer allocated to the task name.
+ */
+
+#define MAIN_TASKNAME_BUFFER_LEN 64
 
 static void	main_poll_loop(void);
 static void	main_initialise(void);
@@ -124,7 +137,7 @@ static void main_poll_loop(void)
 		 * inline handlers shown here.
 		 */
 
-		if (!event_process_event(reason, &blk, 0)) {
+		if (!event_process_event(reason, &blk, 0, NULL)) {
 			switch (reason) {
 			case wimp_OPEN_WINDOW_REQUEST:
 				wimp_open_window(&(blk.open));
@@ -149,19 +162,23 @@ static void main_poll_loop(void)
 
 static void main_initialise(void)
 {
-	static char		task_name[255];
-	char			resources[255], res_temp[255];
-//	osspriteop_area		*sprites;
+	static char		task_name[MAIN_TASKNAME_BUFFER_LEN];
+	char			resources[MAIN_FILENAME_BUFFER_LEN], res_temp[MAIN_FILENAME_BUFFER_LEN];
 
 
 	hourglass_on();
 
-	strcpy(resources, "<ProcText$Dir>.Resources");
-	resources_find_path(resources, sizeof(resources));
+	/* Initialise the resources. */
+
+	string_copy(resources, "<ProcText$Dir>.Resources", MAIN_FILENAME_BUFFER_LEN);
+	if (!resources_initialise_paths(resources, MAIN_FILENAME_BUFFER_LEN, "ProcText$Language", "UK"))
+		error_report_fatal("Failed to initialise resources.");
 
 	/* Load the messages file. */
 
-	snprintf(res_temp, sizeof(res_temp), "%s.Messages", resources);
+	if (!resources_find_file(resources, res_temp, MAIN_FILENAME_BUFFER_LEN, "Messages", osfile_TYPE_TEXT))
+		error_report_fatal("Failed to locate suitable Messages file.");
+
 	msgs_initialise(res_temp);
 
 	/* Initialise the error message system. */
@@ -186,18 +203,16 @@ static void main_initialise(void)
 
 	/* Load the menu structure. */
 
-	snprintf(res_temp, sizeof(res_temp), "%s.Menus", resources);
+	if (!resources_find_file(resources, res_temp, MAIN_FILENAME_BUFFER_LEN, "Menus", osfile_TYPE_DATA))
+		error_msgs_param_report_fatal("BadResource", "Menus", NULL, NULL, NULL);
+
 	templates_load_menus(res_temp);
 
 	/* Load the window templates. */
 
-//	sprites = resources_load_user_sprite_area("<ProcText$Dir>.Sprites");
-//	if (sprites == NULL)
-//		error_msgs_report_fatal("NoSprites");
+	if (!resources_find_file(resources, res_temp, MAIN_FILENAME_BUFFER_LEN, "Templates", osfile_TYPE_TEMPLATE))
+		error_msgs_param_report_fatal("BadResource", "Templates", NULL, NULL, NULL);
 
-//	main_wimp_sprites = sprites;
-
-	snprintf(res_temp, sizeof(res_temp), "%s.Templates", resources);
 	templates_open(res_temp);
 
 	/* Initialise the individual modules. */
