@@ -1,0 +1,11 @@
+.vscode
+build/Licence,fff
+build/manual.html
+build/ReadMe,fff
+build/!ProcText/!Help,ffb
+build/!ProcText/!RunImage,ff8
+build/!ProcText/Resources/UK/HelpText,fff
+build/!ProcText/Resources/UK/Menus,ffd
+build/!ProcText/Resources/UK/ProcText,3d6
+build/package
+obj
