@@ -22,13 +22,13 @@ Sub: [160]:&nbsp;
 Sub: [32][151][32]:[32]&ndash;[32]
 Sub: [151]:&ndash;
 Sub: [32][153][32]:[32]&ndash;[32]
-Sub: °:&deg;
-Sub: £:&pound;
+Sub: ï¿½:&deg;
+Sub: ï¿½:&pound;
 Sub: [140]:...
 Sub: [143]:&bull;
 Sub: [153]:&minus;
-Sub: ×:&times;
-Sub: ü:&uuml;
+Sub: ï¿½:&times;
+Sub: ï¿½:&uuml;
 Sub: [10]:</p>[10][10]<p>
 
 
@@ -53,6 +53,17 @@ Sub: RISC[160]OS 4:RISC[160]OS[160]4
 Sub: RISC[160]OS 5:RISC[160]OS[160]5
 Sub: RISC[160]OS 6:RISC[160]OS[160]6
 Sub: RISC[160]OS Ltd:RISCOS Ltd
+Sub: RISC[160]OSLtd:RISCOS Ltd
+Sub: RISC[160]OSM:RiscOSM
+Sub: RISC[160]OSbits:RISCOSbits
+Sub: RISC[160]OS bits:RISCOSbits
+Sub: RISCOSbits.co.uk:riscosbits.co.uk
+Sub: RISC[160]OSitory:RISCOSitory
+Sub: RISCOSitory.co.uk:riscository.co.uk
+Sub: RISC[160]OSopen.org:riscosopen.org
+Sub: RISC[160]OS.berlin:riscos.berlin
+Sub: RISC[160]OSports.co.uk:riscosports.co.uk
+Sub: RISC[160]OScloverleaf.com:riscoscloverleaf.com
 CiSub: BBC BASIC:BBC[160]BASIC
 CiSub: BASIC V:BASIC[160]V
 CiSub: icon bar:iconbar
@@ -60,7 +71,8 @@ CiSub: icon-bar:iconbar
 CiSub: iconbar:iconbar
 CiSub: sprite file:spritefile
 CiSub: draw file:drawfile
-CiSub: pin board:pinboard
+CiSub: pin board:Pinboard
+CiSub: pinboard:Pinboard
 CiSub: icon[160]bar:iconbar
 CiSub: Risc PC:RiscPC
 CiSub: Risc[160]PC:RiscPC
@@ -74,6 +86,7 @@ CiSub: ADFS:ADFS
 CiSub: SCSIFS:SCSIFS
 CiSub: SDFS:SDFS
 CiSub: HostFS:HostFS
+CiSub: Filecore:Filecore
 CiSub: A9Home:A9home
 CiSub: A9 Home:A9home
 CiSub: A9[160]Home:A9home
@@ -86,15 +99,25 @@ CiSub: Pi2:Pi[160]2
 CiSub: Pi 2:Pi[160]2
 CiSub: Pi3:Pi[160]3
 CiSub: Pi 3:Pi[160]3
+CiSub: Pi4:Pi[160]4
+CiSub: Pi 4:Pi[160]4
 CiSub: PiZero:Pi[160]Zero
 CiSub: Pi Zero:Pi[160]Zero
 CiSub: Pi B:Pi[160]B
+CiSub: 4te:4t[233]
+CiSub: 4t[233]:4t[233]
+CiSub: 4t[233]2:4t[233][178]
+CiSub: 4t[233][178]:4t[233][178]
 CiSub: Beagleboard:Beagleboard
 CiSub: Pandaboard:Pandaboard
 CiSub: ARMini:ARMini
+CiSub: ARMiniX:ARMiniX
 CiSub: ARMini X:ARMiniX
 CiSub: ARMini[160]X:ARMiniX
 CiSub: ARMX6:ARMX6
+CiSub: ARMbook:ARMbook
+CiSub: ARM Book:ARMbook
+CiSub: ARM[160]Book:ARMbook
 CiSub: TiMachine:TiMachine
 CiSub: PandaRo:PandaRo
 CiSub: RapidOIg:RapidO[160]Ig
@@ -109,6 +132,9 @@ CiSub: PiTop:Pi-Top
 CiSub: Pi Top:Pi-Top
 CiSub: Pi[160]Top:Pi-Top
 CiSub: Titanium:Titanium
+CiSub: RiscStation:RiscStation
+CiSub: Risc Station:RiscStation
+CiSub: Risc[160]Station:RiscStation
 CiSub: IGEPv5:IGEPv5
 CiSub: IGEP v5:IGEPv5
 CiSub: IGEP[160]v5:IGEPv5
@@ -125,6 +151,12 @@ CiSub: 32[160]bit:32-bit
 CiSub: 32bit:32-bit
 CiSub: ArtWorks:ArtWorks
 CiSub: ArtWorks 2:ArtWorks[160]2
+CiSub: CD Burn:CDBurn
+CiSub: CD[160]Burn:CDBurn
+CiSub: CDBurn:CDBurn
+CiSub: Easi Writer:EasiWriter
+CiSub: Easi[160]Writer:EasiWriter
+CiSub: EasiWriter:EasiWriter
 CiSub: Impression II:Impression[160]II
 CiSub: ImpressionII:Impression[160]II
 CiSub: Impression 2:Impression[160]II
@@ -136,9 +168,24 @@ CiSub: Impression[160]X:Impression-X
 CiSub: Messenger Pro:Messenger[160]Pro
 CiSub: MessengerPro:Messenger[160]Pro
 CiSub: NetSurf:NetSurf
+CiSub: Otter Browser:Otter Browser
+CiSub: QupZilla:QupZilla
+CiSub: WebKit:WebKit
 CiSub: Ovation Pro:Ovation[160]Pro
 CiSub: OvationPro:Ovation[160]Pro
+CiSub: PhotoDesk:PhotoDesk
+CiSub: Photo Desk:PhotoDesk
 CiSub: RiscOSM:RiscOSM
+CiSub: StrongED:StrongED
+CiSub: Strong ED:StrongED
+CiSub: Tech Writer:TechWriter
+CiSub: Tech[160]Writer:TechWriter
+CiSub: TechWriter:TechWriter
+CiSub: CLFiler:CLFiler
+CiSub: JavaScript:JavaScript
+CiSub: Java Script:JavaScript
+CiSub: Java[160]Script:JavaScript
+CiSub: Postscript:Postscript
 CiSub: WindowsXP:Windows[160]XP
 CiSub: Windows XP: Windows[160]XP
 CiSub: Windows7:Windows[160]7
@@ -160,12 +207,40 @@ CiSub: VirtualAcorn:Virtual Acorn
 CiSub: Virtual[160]Acorn:Virtual Acorn
 CiSub: MicroSD:Micro[160]SD
 CiSub: Micro SD:Micro[160]SD
+CiSub: Micro-SD:Micro[160]SD
+CiSub: SD[160]Card:SD[160]card
+CiSub: SD Card:SD[160]card
+CiSub: SDCard:SD[160]card
+CiSub: SD-Card:SD[160]card
+CiSub: eMMC:eMMC
+CiSub: RS-232:RS-232
+CiSub: RS232:RS-232
+CiSub: RS 232:RS-232
+CiSub: RS[160]232:RS-232
+CiSub: CD[160]ROM:CD[160]ROM
+CiSub: CD ROM:CD[160]ROM
+CiSub: CDROM:CD[160]ROM
+CiSub: CD-ROM:CD[160]ROM
+CiSub: Ethernet:Ethernet
 CiSub: RPCEmu:RPCEmu
 CiSub: RPC Emu:RPCEmu
 CiSub: RPC[160]Emu:RPCEmu
 CiSub: ArcEm:ArcEm
 CiSub: Arc Em:ArcEm
 CiSub: Arc[160]Em:ArcEm
+CiSub: MIDI:MIDI
+CiSub: S/PDIF:S/PDIF
+CiSub: Unicode:Unicode
+CiSub: MiniUSB:Mini[160]USB
+CiSub: Mini-USB:Mini[160]USB
+CiSub: Mini-USB:Mini[160]USB
+CiSub: MicroUSB:Micro[160]USB
+CiSub: Micro-USB:Micro[160]USB
+CiSub: Micro-USB:Micro[160]USB
+CiSub: MiniHDMI:Mini[160]HDMI
+CiSub: Mini-HDMI:Mini[160]HDMI
+CiSub: Mini-HDMI:Mini[160]HDMI
+
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
 Sub: --:[32][151][32]
