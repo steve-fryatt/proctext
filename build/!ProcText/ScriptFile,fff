@@ -131,6 +131,9 @@ CiSub: Pi-Top:Pi-Top
 CiSub: PiTop:Pi-Top
 CiSub: Pi Top:Pi-Top
 CiSub: Pi[160]Top:Pi-Top
+CiSub: Pinebook:Pinebook
+CiSub: PinebookPro:Pinebook[160]Pro
+CiSub: Pinebook Pro:Pinebook[160]Pro
 CiSub: Titanium:Titanium
 CiSub: RiscStation:RiscStation
 CiSub: Risc Station:RiscStation
@@ -231,6 +234,16 @@ CiSub: Arc[160]Em:ArcEm
 CiSub: MIDI:MIDI
 CiSub: S/PDIF:S/PDIF
 CiSub: Unicode:Unicode
+CiSub: USB2:USB[160]2
+CiSub: USB 2:USB[160]2
+CiSub: USB3:USB[160]3
+CiSub: USB 3:USB[160]3
+CiSub: USBA:USB[160]A
+CiSub: USB A:USB[160]A
+CiSub: USBB:USB[160]B
+CiSub: USB B:USB[160]B
+CiSub: USBC:USB[160]C
+CiSub: USB C:USB[160]C
 CiSub: MiniUSB:Mini[160]USB
 CiSub: Mini-USB:Mini[160]USB
 CiSub: Mini-USB:Mini[160]USB
