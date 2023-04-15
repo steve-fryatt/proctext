@@ -1,6 +1,6 @@
-| >!Run
+| >!Boot
 |
-| Copyright 2009-2012, Stephen Fryatt
+| Copyright 2009-2023, Stephen Fryatt
 |
 | This file is part of ProcText:
 |
@@ -23,13 +23,15 @@
 | permissions and limitations under the Licence.
 
 Set ProcText$Help <Obey$Dir>.!Help
-Set ProcText$Version "0.10"
+Set ProcText$Version "{{VERSION}}"
 Set ProcText$Web "http://www.stevefryatt.org.uk/risc-os/"
 Set ProcText$Title "ProcText"
 Set ProcText$Publisher "Stephen Fryatt"
 Set ProcText$Description "Automated Text Manipulation"
 
-Set ProcText$Dir <Obey$Dir>
+If "<ProcText$Dir>"="" Then Set ProcText$Dir <Obey$Dir>
+
+| Set the application sprites.
 
 Set ProcText$Sprites <ProcText$Dir>.!Sprites
 |If "<Boot$OSVersion>" >= "400" Then Set ProcText$Sprites <ProcText$Dir>.4Sprites
@@ -39,16 +41,3 @@ Set ProcText$Sprites <ProcText$Dir>.!Sprites
 IconSprites <ProcText$Sprites>
 
 Unset ProcText$Sprites
-
-| Ensure the Nested Wimp is installed.
-
-|RMEnsure WindowManager 3.98 Error ProcText requires the Nested Window Manager.
-
-| Ensure that the Castle Shared C Library is present, with C99 support.
-
-RMEnsure SharedCLibrary 5.17 RMLoad System:Modules.CLib
-RMEnsure SharedCLibrary 5.43 Error ProcText requires version 5.43 or later of the Shared C Library.
-
-WimpSlot -min 256k -max 256k
-
-Run <ProcText$Dir>.!RunImage %*0

@@ -32,5 +32,7 @@ HTMLHELP := manual.html
 
 OBJS = choices.o convert.o iconbar.o main.o process.o
 
+SUBS := !Boot,feb !Run,feb
+
 include $(SFTOOLS_MAKE)/CApp
 
