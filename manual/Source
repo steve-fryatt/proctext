@@ -10,8 +10,8 @@ ProcText
 #SpriteFile Sprites
 #Sprite 8,0 Logo
 #Align Right
-{f*/:Automated Text Manipulation†}
-Version $$version$$ ($$date$$)†
+{f*/:Automated Text ManipulationÔøΩ}
+Version $$version$$ ($$date$$)ÔøΩ
 #Below
 #Line
 #Align Centre
@@ -19,23 +19,23 @@ Version $$version$$ ($$date$$)†
 
 #Indent 2
 #Table Columns 4
-è <Introduction>
-è <Installing ProcText=>Install>
-è <Using ProcText=>Use>
-è <Writing Script Files=>Scripts>
-è <Using the Queue=>Queue>
-è <Setting Choices=>Choices>
-è <Version History=>History>
+ÔøΩ <Introduction>
+ÔøΩ <Installing ProcText=>Install>
+ÔøΩ <Using ProcText=>Use>
+ÔøΩ <Writing Script Files=>Scripts>
+ÔøΩ <Using the Queue=>Queue>
+ÔøΩ <Setting Choices=>Choices>
+ÔøΩ <Version History=>History>
 #Endtable
 #Indent
 #Line
 #Align Left
 If you have any comments about {f/:ProcText}, or would like to report any bugs that you find, you can email me at the address below.
 
-Updates to {f/:ProcText} and more applications for RISC OS computers can be found on my website at <http://www.stevefryatt.org.uk/software/=>#url>.
+Updates to {f/:ProcText} and more applications for RISC OS computers can be found on my website at <http://www.stevefryatt.org.uk/risc-os=>#url>.
 
 #Align Centre
-© Stephen Fryatt, 2011 (<info@stevefryatt.org.uk=>#url mailto:info@stevefryatt.org.uk>)
+ÔøΩ Stephen Fryatt, 2011 (<info@stevefryatt.org.uk=>#url mailto:info@stevefryatt.org.uk>)
 
 A plain text version of this manual is available <here=>*Filer_Run <ProcText$HelpText\>>.
 #Align Left
@@ -93,9 +93,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 See the Licence for the specific language governing permissions and limitations under the Licence.
 
-The source for <cite>ProcText</cite> can be found alongside this binary download, at <link ref="#url http://www.stevefryatt.org.uk/software">http://www.stevefryatt.org.uk/software</link>
-
-The necessary libraries and build tools can be found at <link ref="#url http://www.stevefryatt.org.uk/software/build">http://www.stevefryatt.org.uk/software/build</link>
+The source for <cite>ProcText</cite> can be found on GitHub, at <link ref="#url https://github.com/steve-fryatt/proctext">https://github.com/steve-fryatt/proctext</link>
 
 </chapter>
 
@@ -244,7 +242,7 @@ Updates and Contacting Me
   that you find, you can email me at the address below.
 
   Updates to ProcText and more software for RISC OS computers can be found
-  on my website at http://www.stevefryatt.org.uk/software/
+  on my website at http://www.stevefryatt.org.uk/risc-os
 
   Stephen Fryatt
   email: info@stevefryatt.org.uk

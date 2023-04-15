@@ -4,7 +4,7 @@
 |
 | This file is part of ProcText:
 |
-|   http://www.stevefryatt.org.uk/software/
+|   http://www.stevefryatt.org.uk/risc-os/
 |
 | Licensed under the EUPL, Version 1.2 only (the "Licence");
 | You may not use this work except in compliance with the
@@ -24,7 +24,7 @@
 
 Set ProcText$Help <Obey$Dir>.!Help
 Set ProcText$Version "0.10"
-Set ProcText$Web "http://www.stevefryatt.org.uk/software/"
+Set ProcText$Web "http://www.stevefryatt.org.uk/risc-os/"
 Set ProcText$Title "ProcText"
 Set ProcText$Publisher "Stephen Fryatt"
 Set ProcText$Description "Automated Text Manipulation"
