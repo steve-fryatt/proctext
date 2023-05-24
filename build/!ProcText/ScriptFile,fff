@@ -108,6 +108,9 @@ CiSub: 4te:4t[233]
 CiSub: 4t[233]:4t[233]
 CiSub: 4t[233]2:4t[233][178]
 CiSub: 4t[233][178]:4t[233][178]
+CiSub: 4tissimo!:4tissimo!
+CiSub: Rocky RAID:RockyRAID
+CiSub: RockyRAID:RockyRAID
 CiSub: Beagleboard:Beagleboard
 CiSub: Pandaboard:Pandaboard
 CiSub: ARMini:ARMini
@@ -216,6 +219,13 @@ CiSub: SD Card:SD[160]card
 CiSub: SDCard:SD[160]card
 CiSub: SD-Card:SD[160]card
 CiSub: eMMC:eMMC
+CiSub: M.2:M.2
+CiSub: NVMe:NVMe
+CiSub: NVM Express:NVM[160]Express
+CiSub: NVMExpress:NVM[160]Express
+CiSub: PCIe:PCIe
+CiSub: PCI Express:PCI[160]Express
+CiSub: PCIExpress:PCI[160]Express
 CiSub: RS-232:RS-232
 CiSub: RS232:RS-232
 CiSub: RS 232:RS-232
