@@ -191,7 +191,7 @@ CiSub: CLFiler:CLFiler
 CiSub: JavaScript:JavaScript
 CiSub: Java Script:JavaScript
 CiSub: Java[160]Script:JavaScript
-CiSub: Postscript:Postscript
+CiSub: PostScript:PostScript
 CiSub: WindowsXP:Windows[160]XP
 CiSub: Windows XP: Windows[160]XP
 CiSub: Windows7:Windows[160]7
@@ -263,6 +263,7 @@ CiSub: Micro-USB:Micro[160]USB
 CiSub: MiniHDMI:Mini[160]HDMI
 CiSub: Mini-HDMI:Mini[160]HDMI
 CiSub: Mini-HDMI:Mini[160]HDMI
+CiSub: eBay:eBay
 
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
