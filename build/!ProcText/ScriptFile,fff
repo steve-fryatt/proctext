@@ -264,6 +264,9 @@ CiSub: MiniHDMI:Mini[160]HDMI
 CiSub: Mini-HDMI:Mini[160]HDMI
 CiSub: Mini-HDMI:Mini[160]HDMI
 CiSub: eBay:eBay
+CiSub: G-mail:Gmail
+CiSub: Gmail:Gmail
+CiSub: e-mail:email
 
 Sub: [32]-[32]:[32][151][32]
 Sub: [32]--[32]:[32][151][32]
