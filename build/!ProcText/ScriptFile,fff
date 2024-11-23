@@ -82,11 +82,6 @@ CiSub: BBC Master:BBC[160]Master
 CiSub: Model B:Model[160]B
 CiSub: ModelB:Model[160]B
 CiSub: BBC B:BBC[160]B
-CiSub: ADFS:ADFS
-CiSub: SCSIFS:SCSIFS
-CiSub: SDFS:SDFS
-CiSub: HostFS:HostFS
-CiSub: Filecore:Filecore
 CiSub: A9Home:A9home
 CiSub: A9 Home:A9home
 CiSub: A9[160]Home:A9home
@@ -243,6 +238,16 @@ CiSub: Arc Em:ArcEm
 CiSub: Arc[160]Em:ArcEm
 CiSub: MIDI:MIDI
 CiSub: S/PDIF:S/PDIF
+CiSub: ADFS:ADFS
+CiSub: DOSFS:DOSFS
+CiSub: Fat32FS:Fat32FS
+CiSub: SCSIFS:SCSIFS
+CiSub: SDFS:SDFS
+CiSub: HostFS:HostFS
+CiSub: NVMEFS:NVMEFS
+CiSub: NVFS:NVFS
+CiSub: RAMFS:RAMFS
+CiSub: Filecore:Filecore
 CiSub: Unicode:Unicode
 CiSub: USB2:USB[160]2
 CiSub: USB 2:USB[160]2
