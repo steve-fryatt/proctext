@@ -195,7 +195,7 @@ static void main_initialise(void)
 
 	/* Initialise the configuration. */
 
-	config_initialise(task_name, "ProcText", "<ProcText$Dir>");
+	config_initialise(task_name, "ProcText", "<ProcText$Dir>", NULL);
 
 	config_str_init("ScriptFile", "<ProcText$Dir>.ScriptFile");
 
@@ -256,4 +256,3 @@ static osbool main_message_prequit(wimp_message *message)
 
 	return TRUE;
 }
-

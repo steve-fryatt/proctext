@@ -77,7 +77,7 @@ static osbool		convert_load_file(wimp_w w, wimp_i i, unsigned filetype, char *fi
 static void		convert_click_handler(wimp_pointer *pointer);
 static void		convert_menu_prepare_handler(wimp_w window, wimp_menu *menu, wimp_pointer *pointer);
 static void		convert_drag_end_handler(wimp_pointer *pointer, void *data);
-static osbool		convert_drag_end_save_handler(char *filename, void *data);
+static osbool		convert_drag_end_save_handler(char *filename, osbool safe, void *data);
 static osbool		convert_immediate_window_save(void);
 static osbool		convert_process_and_save(char *filename);
 static void		convert_close_window();
@@ -196,7 +196,7 @@ static void convert_drag_end_handler(wimp_pointer *pointer, void *data)
 
 	leafname = string_find_leafname(icons_get_indirected_text_addr(convert_window, ICON_CONVERT_FILENAME));
 
-	dataxfer_start_save(pointer, leafname, 0, osfile_TYPE_TEXT, 0, convert_drag_end_save_handler, NULL);
+	dataxfer_start_save(pointer, leafname, 0, osfile_TYPE_TEXT, 0, convert_drag_end_save_handler, NULL, NULL);
 }
 
 
@@ -205,11 +205,12 @@ static void convert_drag_end_handler(wimp_pointer *pointer, void *data)
  * conversion using the filename returned.
  *
  * \param *filename		The filename returned by the DataSave protocol.
+ * \param safe			TRUE if the target reports as being safe.
  * \param *data			Data pointer (unused).
  * \return			TRUE if the save was started OK; else FALSE.
  */
 
-static osbool convert_drag_end_save_handler(char *filename, void *data)
+static osbool convert_drag_end_save_handler(char *filename, osbool safe, void *data)
 {
 	if (!convert_process_and_save(filename))
 		return FALSE;
@@ -475,4 +476,3 @@ static void convert_logger(char *text)
 	if (convert_logger_available)
 		debug_printf(text);
 }
-
