@@ -578,7 +578,7 @@ static int load_script(char *file, char *script, struct process_action **actions
 {
 	FILE				*f;
 	enum config_read_status		result;
-	bool				found = FALSE;
+	osbool				found = FALSE;
 	int				items = 0, size = 0;
 	char				token[sf_MAX_CONFIG_FILE_BUFFER], value[sf_MAX_CONFIG_FILE_BUFFER], section[sf_MAX_CONFIG_FILE_BUFFER], *bkpt, log[PROCESS_LOG_LINE_LEN];
 
@@ -801,4 +801,3 @@ static char *write_ctrl_chars(char *buf, char *str, int len)
 
 	return buf;
 }
-
